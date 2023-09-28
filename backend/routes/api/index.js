@@ -1,13 +1,17 @@
 const router = require('express').Router();
+const sessionRouter = require('./session');
+const usersRouter = require('./users');
 
 const { restoreUser } = require('../../utils/auth'); //make this the first before any other middleware or router handlers are connected
-
-
 const { setTokenCookie } = require('../../utils/auth');
 const { requireAuth } = require('../../utils/auth')
 const { User } = require('../../db/models');
 
 router.use(restoreUser);
+
+router.use('/session', sessionRouter);
+
+router.use('/users', usersRouter);
 
 // Testing restoreUser
 router.get('/restore-user', (req, res) => {
