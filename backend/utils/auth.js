@@ -49,7 +49,7 @@ const restoreUser = (req, res, next) => {
                 }
             });
         } catch (e) {
-            res.clearCokie('token');
+            res.clearCookie('token');
             return next();
         }
 

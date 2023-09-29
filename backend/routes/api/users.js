@@ -29,12 +29,14 @@ const validateSignup = [
 ];
 
 router.post('/', validateSignup, async (req, res) => {
-    const { email, password, username } = req.body;
+    const { firstName, lastName, email, password, username } = req.body;
     const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword });
+    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
 
     const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username,
     };
@@ -62,9 +64,11 @@ module.exports = router;
 //         "XSRF-TOKEN": "VjiE4RvO--H_iltZZVjWzaP_A96_6hipEnkk"
 //     },
 //     body: JSON.stringify({
+//         firstName: 'Alex',
+//         lastName: 'Caleb',
 //         email: 'wehatepython@javascript.com',
 //         username: 'welovejava',
-//         password:'unoar'
+//         password:'unoaraw'
 //     })
 // }).then(res => res.json()).then(data => console.log(data))
 
