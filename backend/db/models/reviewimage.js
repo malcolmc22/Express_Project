@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // creates one to many relationship with reviews table
       ReviewImage.belongsTo(models.Review,
         {
           foreignKey: 'reviewId'
