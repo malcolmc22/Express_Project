@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-const { User } = require('../models');
+const { SpotImage } = require('../models');
 const bcrypt = require('bcryptjs');
 
 let options = {};
@@ -21,6 +21,23 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+   await SpotImage.bulkCreate([
+    {
+      spotId: 1,
+      url: 'https://github.com/malcolmc22/Express_Project/blob/main/images/airbnb_dbdiagram.png' ,
+      preview: true
+    },
+    {
+      spotId: 2,
+      url: 'https://github.com/malcolmc22/Express_Project/blob/main/images/airbnb_dbdiagram.png',
+      preview: true
+    },
+    {
+      spotId: 3,
+      url: 'https://github.com/malcolmc22/Express_Project/blob/main/images/airbnb_dbdiagram.png',
+      preview: false
+    }
+   ], {validate: true })
   },
 
   async down (queryInterface, Sequelize) {
@@ -30,5 +47,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'SpotImages'
+    await queryInterface.bulkDelete(options, {
+      spotId: [1,2,3]
+    })
   }
 };
