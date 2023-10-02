@@ -67,7 +67,7 @@ router.get('/', (req, res) => {
         return res.json({
             user: safeUser
         });
-    } else return res.json({ message: 'Authenticated user is required'});
+    } else return res.status(403).json({ message: 'Forbidden'});
 });
 
 router.delete('/', (req, res) => {
