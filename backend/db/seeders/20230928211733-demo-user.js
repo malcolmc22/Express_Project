@@ -20,6 +20,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+
    await User.bulkCreate([
     {
       firstName: 'Al',
