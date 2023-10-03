@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       //     otherKey: 'spotId'
       //   })
       // // connects to spots through the joins table reviews
-      //   User.belongsToMany(models.Spot,
-      //     {
-      //       through: models.Review,
-      //       foreignKey: 'userId',
-      //       otherKey: 'spotId'
-      //     })
+        User.belongsToMany(models.Spot,
+          {
+            through: models.Review,
+            foreignKey: 'userId',
+            otherKey: 'spotId'
+          })
       // creates the one to many association with spots
         User.hasMany(models.Spot,
           {
