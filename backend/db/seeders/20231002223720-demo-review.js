@@ -23,9 +23,24 @@ module.exports = {
     */
     await Review.bulkCreate([
       {
-
+        spotId: 1,
+        userId: 1,
+        review: 'poggers',
+        stars: 5
+      },
+      {
+        spotId: 2,
+        userId: 2,
+        review: 'not poggers',
+        stars: 1
+      },
+      {
+        spotId: 3,
+        userId: 3,
+        review: 'kinda poggers',
+        stars: 3
       }
-    ])
+    ], {validate: true })
   },
 
   async down (queryInterface, Sequelize) {
@@ -35,5 +50,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'Reviews';
+    await queryInterface.bulkDelete(options, {
+      spotId: [1,2,3]
+    })
   }
 };

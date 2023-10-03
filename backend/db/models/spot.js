@@ -17,33 +17,32 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'ownerId'
         })
 
-      // connects to users through the joins table reviews
-      Spot.belongsToMany(models.User,
-        {
-        through: models.Review,
-        foreignKey: 'spotId',
-        otherKey:'userId'
-        })
+      // // connects to users through the joins table reviews
+      // Spot.belongsToMany(models.User,
+      //   {
+      //   through: models.Review,
+      //   foreignKey: 'spotId',
+      //   otherKey:'userId'
+      //   })
 
-      // creates the one to many association with spotimages table
-      Spot.hasMany(models.SpotImage,
-        {
-          foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true
-        })
+      // // creates the one to many association with spotimages table
+      // Spot.hasMany(models.SpotImage,
+      //   {
+      //     foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true
+      //   })
 
-      // connects to users through the joins table bookings
-      Spot.belongsToMany(models.User,
-        {
-        through: models.Booking,
-        foreignKey: 'spotId',
-        otherKey: 'userId'
-        })
+      // // connects to users through the joins table bookings
+      // Spot.belongsToMany(models.User,
+      //   {
+      //   through: models.Booking,
+      //   foreignKey: 'spotId',
+      //   otherKey: 'userId'
+      //   })
     }
   }
   Spot.init({
     ownerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER
     },
     address: {
       type: DataTypes.STRING,
@@ -62,11 +61,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false
     },
     lng: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     name: {
