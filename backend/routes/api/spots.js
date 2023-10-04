@@ -51,6 +51,7 @@ const validateSignup = [
     handleValidationErrors
 ]
 
+
 // add image to a spot based on spot id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
 
@@ -65,12 +66,11 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
         }
     })
 
-
-    const newImg = await SpotImage.create({spotId, url ,preview})
-
     if (!allSpots || allSpots.length <= 0) {
         return res.status(404).json({message: "Spot couldn't be found"})
     };
+
+    const newImg = await SpotImage.create({spotId, url ,preview})
 
     res.json({
         id: newImg.id,
@@ -133,6 +133,41 @@ router.get('/current', requireAuth, async (req, res) => {
 
 });
 
+
+// edit a spot
+router.put('/:spotId', requireAuth, validateSignup, async (req, res) => {
+    const { spotId } = req.params
+
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    const allSpots = await Spot.findAll({
+        where: {
+            id: spotId,
+            ownerId: req.user.id
+        }
+    })
+
+    if (!allSpots || allSpots.length <= 0) {
+        return res.status(404).json({message: "Spot couldn't be found"})
+    };
+
+    const editedSpot = await Spot.findByPk(spotId)
+
+        editedSpot.address = address,
+        editedSpot.city = city,
+        editedSpot.state = state,
+        editedSpot.country = country,
+        editedSpot.lat = lat,
+        editedSpot.lng = lng,
+        editedSpot.name = name,
+        editedSpot.description = description,
+        editedSpot.price = price
+
+        editedSpot.validate();
+        editedSpot.save();
+
+    res.json(editedSpot)
+})
 
 
 // get a spot by its ID
