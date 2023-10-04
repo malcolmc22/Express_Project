@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage, Review, sequelize, User } = require('../../db/models');
+const { Spot, SpotImage, Review, sequelize, User, ReviewImage } = require('../../db/models');
 
 const router = express.Router();
 
@@ -51,7 +51,58 @@ const validateSignup = [
     handleValidationErrors
 ]
 
+// all reviews by spot id
+router.get('/:spotId/reviews', async( req, res) => {
+    const allReviews = await Review.findAll({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
 
+    const allSpots = await Spot.findAll({
+        where: {
+            id: req.params.spotId
+        }
+    })
+
+    if (!allSpots || allSpots.length <= 0) {
+        return res.status(404).json({message: "Spot couldn't be found"})
+    };
+   const payload = [];
+
+    for (let i = 0; i < allReviews.length; i++ ) {
+        const currReview = allReviews[i];
+
+        const user = await User.findOne({
+            where: {
+                id: currReview.userId
+            },
+            attributes: ['id', 'firstName', 'lastName']
+        });
+
+        const images = await ReviewImage.findAll({
+            where: {
+                reviewId: currReview.id
+            },
+            attributes: ['id', 'url']
+        });
+
+        const data = {
+            id: currReview.id,
+            userId: currReview.userId,
+            spotId: currReview.spotId,
+            review: currReview.review,
+            stars: currReview.stars,
+            createdAt: currReview.createdAt,
+            updatedAt: currReview.updatedAt,
+            User: user,
+            ReviewImages: images
+        }
+
+        payload.push(data);
+    }
+    res.json({Reviews: payload})
+})
 // add image to a spot based on spot id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
 
