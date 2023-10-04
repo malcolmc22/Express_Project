@@ -51,6 +51,34 @@ const validateSignup = [
     handleValidationErrors
 ]
 
+// add image to a spot based on spot id
+router.post('/:spotId/images', requireAuth, async(req, res) => {
+
+    const { spotId } = req.params
+
+    const { url, preview } = req.body;
+
+    const allSpots = await Spot.findAll({
+        where: {
+            id: spotId,
+            ownerId: req.user.id
+        }
+    })
+
+
+    const newImg = await SpotImage.create({spotId, url ,preview})
+
+    if (!allSpots || allSpots.length <= 0) {
+        return res.status(404).json({message: "Spot couldn't be found"})
+    };
+
+    res.json({
+        id: newImg.id,
+        url: newImg.url,
+        preview: newImg.preview
+    })
+});
+
 // get all spots owned by the current logged in user
 router.get('/current', requireAuth, async (req, res) => {
 
@@ -174,11 +202,13 @@ router.get('/:spotId', async (req, res) => {
 
 })
 
+// create a new spot
 router.post('/', requireAuth, validateSignup, async(req, res) => {
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
 
     const newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price})
-
+    delete validateSignup.stack
+    delete validateSignup.title
     res.json(newSpot);
 })
 
