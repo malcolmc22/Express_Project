@@ -70,6 +70,11 @@ router.get('/:spotId', async (req, res) => {
             id: spotId
         }
     })
+
+    if (allSpots.length <= 0) {
+        return res.json({message: "Spot couldn't be found"})
+    };
+
     const payload = [];
 
     for (let i = 0; i < allSpots.length; i++) {
@@ -117,27 +122,6 @@ router.get('/:spotId', async (req, res) => {
 })
 
 router.get('/', async(req, res) => {
-    // const allSpots = await Spot.findAll({
-    //     include: [
-    //         {
-    //             model: SpotImage,
-    //             attributes: []
-    //         },
-    //         {
-    //             model: Review,
-    //             attributes: []
-    //         }
-    //     ],
-    //     attributes: {
-    //         include:
-    //         [
-    //             [sequelize.col('SpotImages.url'), 'previewImage'],
-    //         ]
-    //     }
-    // });
-    // allSpots.avgRating = await Spot.sum('price')
-    // // let test =
-    // console.log( allSpots.id )
 
     const allSpots = await Spot.findAll()
     const payload = [];
@@ -187,3 +171,25 @@ router.get('/', async(req, res) => {
 
 
 module.exports = router;
+
+// const allSpots = await Spot.findAll({
+    //     include: [
+    //         {
+    //             model: SpotImage,
+    //             attributes: []
+    //         },
+    //         {
+    //             model: Review,
+    //             attributes: []
+    //         }
+    //     ],
+    //     attributes: {
+    //         include:
+    //         [
+    //             [sequelize.col('SpotImages.url'), 'previewImage'],
+    //         ]
+    //     }
+    // });
+    // allSpots.avgRating = await Spot.sum('price')
+    // // let test =
+    // console.log( allSpots.id )
