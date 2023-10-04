@@ -127,7 +127,7 @@ router.get('/current', requireAuth, async (req, res) => {
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
             avgRating: avg,
-            previewImage: url
+            previewImage: url || null
         }
         payload.push(data)
     }
