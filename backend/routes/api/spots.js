@@ -8,6 +8,50 @@ const { Spot, SpotImage, Review, sequelize, User } = require('../../db/models');
 
 const router = express.Router();
 
+const validateSignup = [
+    check('address')
+        .exists({ checkFalsy: true})
+        .notEmpty()
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({ checkFalsy: true})
+        .notEmpty()
+        .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true})
+        .notEmpty()
+        .withMessage('State is required'),
+    check('country')
+        .exists({ checkFalsy: true})
+        .notEmpty()
+        .withMessage('Country is required'),
+    check('lat')
+        .exists({ checkFalsy: true})
+        .not()
+        .isInt()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists({ checkFalsy: true})
+        .not()
+        .isInt()
+        .withMessage('Longitude is not valid'),
+    check('name')
+        .exists({ checkFalsy: true})
+        .notEmpty()
+        .withMessage('Name cannot be empty')
+        .isLength({max: 50})
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .exists({ checkFalsy: true})
+        .notEmpty()
+        .withMessage('Description is required'),
+    check('price')
+        .exists({checkFalsy : true})
+        .withMessage('Price per day is required'),
+    handleValidationErrors
+]
+
+// get all spots owned by the current logged in user
 router.get('/current', requireAuth, async (req, res) => {
 
     const allSpots = await Spot.findAll({
@@ -61,6 +105,9 @@ router.get('/current', requireAuth, async (req, res) => {
 
 });
 
+
+
+// get a spot by its ID
 router.get('/:spotId', async (req, res) => {
 
     const { spotId } = req.params
@@ -72,7 +119,7 @@ router.get('/:spotId', async (req, res) => {
     })
 
     if (allSpots.length <= 0) {
-        return res.json({message: "Spot couldn't be found"})
+        return res.status(404).json({message: "Spot couldn't be found"})
     };
 
     const payload = [];
@@ -121,6 +168,15 @@ router.get('/:spotId', async (req, res) => {
 
 })
 
+router.post('/', requireAuth, validateSignup, async(req, res) => {
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    const newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price})
+
+    res.json(newSpot);
+})
+
+// get all the spots
 router.get('/', async(req, res) => {
 
     const allSpots = await Spot.findAll()
@@ -142,7 +198,9 @@ router.get('/', async(req, res) => {
 
         const img = await SpotImage.findByPk(spot.id)
 
-        const url = img.url
+        let url;
+
+        if (img) url = img.url
 
         const avg = sum / all.length
 
