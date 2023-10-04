@@ -133,15 +133,19 @@ router.get('/:spotId', async (req, res) => {
             }
         })
 
+        const owner = await User.findByPk(spot.ownerId)
+
         const sum = await Review.sum('stars',{
             where: {
                 spotId: spot.id
             }
         })
 
-        const imgs = await SpotImage.findByPk(spot.id)
-
-        const url = imgs.url
+        const imgs = await SpotImage.findAll({
+            where: {
+                spotId: spot.id
+            }
+        })
 
         const avg = sum / all.length
 
@@ -159,8 +163,10 @@ router.get('/:spotId', async (req, res) => {
             price: spot.price,
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
+            numReviews: all.length,
             avgRating: avg,
-            previewImage: url
+            SpotImages: imgs,
+            Owner: owner
         }
         payload.push(data)
     }
