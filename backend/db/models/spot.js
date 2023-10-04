@@ -32,12 +32,12 @@ module.exports = (sequelize, DataTypes) => {
         })
 
       // // connects to users through the joins table bookings
-      // Spot.belongsToMany(models.User,
-      //   {
-      //   through: models.Booking,
-      //   foreignKey: 'spotId',
-      //   otherKey: 'userId'
-      //   })
+      Spot.hasMany(models.Booking,
+        {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true
+        })
     }
   }
   Spot.init({
