@@ -59,6 +59,61 @@ router.get('/current', requireAuth, async (req, res) => {
     }
     res.json({Spots: payload})
 
+});
+
+router.get('/:spotId', async (req, res) => {
+
+    const { spotId } = req.params
+
+    const allSpots = await Spot.findAll({
+        where: {
+            id: spotId
+        }
+    })
+    const payload = [];
+
+    for (let i = 0; i < allSpots.length; i++) {
+        const spot = allSpots[i];
+
+        const all = await Review.findAll({
+            where: {
+                spotId: spot.id
+            }
+        })
+
+        const sum = await Review.sum('stars',{
+            where: {
+                spotId: spot.id
+            }
+        })
+
+        const imgs = await SpotImage.findByPk(spot.id)
+
+        const url = imgs.url
+
+        const avg = sum / all.length
+
+        const data = {
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: spot.lat,
+            lng: spot.lng,
+            name: spot.name,
+            description: spot.description,
+            price: spot.price,
+            createdAt: spot.createdAt,
+            updatedAt: spot.updatedAt,
+            avgRating: avg,
+            previewImage: url
+        }
+        payload.push(data)
+    }
+    res.json({Spots: payload})
+
 })
 
 router.get('/', async(req, res) => {
