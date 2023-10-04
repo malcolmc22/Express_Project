@@ -106,7 +106,9 @@ router.get('/current', requireAuth, async (req, res) => {
 
         const imgs = await SpotImage.findByPk(spot.id)
 
-        const url = imgs.url
+        let url;
+
+        if (imgs) url = imgs.url
 
         const avg = sum / all.length
 

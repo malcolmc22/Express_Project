@@ -76,6 +76,7 @@ module.exports = router;
 // fetch('/api/users/users', {
 //     method: 'GET',
 // })
+
 // fetch('/api/users', {
 //     method: 'POST',
 //     headers: {
