@@ -5,6 +5,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, SpotImage, Review, sequelize, User, ReviewImage, Booking } = require('../../db/models');
+const { noExtendLeft } = require('sequelize/lib/operators');
+const cookieParser = require('cookie-parser');
 
 const router = express.Router();
 
@@ -63,6 +65,89 @@ const validateNewReview = [
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors,
 ]
+
+
+router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
+
+    const user = req.user.id;
+
+    const spotId = req.params.spotId;
+
+    const payload = [];
+
+    const {startDate, endDate} = req.body;
+    let newDate = new Date(startDate);
+    let newDate2 = new Date(endDate);
+    let startDateString = newDate.toDateString();
+    let endDateString = newDate2.toDateString();
+    let newDate3 = new Date(endDateString);
+    let newDate4 = new Date (startDateString)
+    let compareStart = newDate4.getTime();
+    let compareEnd = newDate3.getTime();
+
+    if ( compareEnd <= compareStart) {
+        const err = new Error("Bad Request")
+        err.errors = { endDate: "endDate cannot be on or before startDate"}
+        delete err.stack;
+        next(err);
+    };
+
+    const spotExists = await Spot.findOne({
+        where: {
+            id: spotId
+        }
+    })
+
+    if (!spotExists || spotExists.length <= 0) {
+        return res.status(404).json({message: "Spot couldn't be found"})
+    };
+
+    const booking = await Booking.findAll({
+        where: {
+            spotId: spotExists.id
+        }
+    })
+    const spotOwner = await Booking.findAll({
+        where: {
+            spotId: spotId,
+            userId: user
+        }
+    })
+
+    if(!spotOwner.length) {
+        // console.log(spotExists)
+        for (let i = 0; i <booking.length; i++) {
+            let currBooking = booking[i]
+            let currBookingStart = currBooking.startDate.getTime()
+            let currBookingEnd = currBooking.endDate.getTime()
+            // // console.log('this',)
+            // console.log('real start', compareStart)
+            // console.log('that', )
+            if (compareStart >= currBookingStart && compareStart <= currBookingEnd) {
+                const errors = new Error("Sorry, this spot is already booked for the specified dates")
+                // err.statusCode(403)
+                errors.errors = { startDate: "Start date conflicts with an existing booking",
+                endDate: "End date conflicts with an existing booking"}
+                delete errors.stack;
+                return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
+            };
+
+            if (compareEnd >= currBookingStart && compareStart <= currBookingEnd) {
+                const errors = new Error("Sorry, this spot is already booked for the specified dates")
+                // err.statusCode(403)
+                errors.errors = { startDate: "Start date conflicts with an existing booking",
+                endDate: "End date conflicts with an existing booking"}
+                delete errors.stack;
+               return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
+            }
+        }
+
+        const newBooking = await Booking.create({spotId: spotExists.id, userId: user, startDate, endDate})
+        return res.json(newBooking)
+    }
+
+});
+
 // get all bookings for spot on spot id
 router.get('/:spotId/bookings', requireAuth, async(req, res) => {
     const user = req.user.id;
