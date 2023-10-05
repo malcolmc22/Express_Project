@@ -61,6 +61,22 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 });
 // delete a review
 router.delete('/:reviewId', requireAuth, async(req, res) => {
+    const reviewId = req.params.reviewId;
+
+    const forsakenReview = await Review.findOne({
+        where: {
+            userId: req.user.id,
+            id: reviewId
+        }
+    });
+
+    if (!forsakenReview || forsakenReview.length <= 0 ) {
+        res.status(404).json({message: "Review couldn't be found"})
+    };
+
+    forsakenReview.destroy();
+
+    res.json({message: "Successfully deleted"});
 
 })
 // edit a review
