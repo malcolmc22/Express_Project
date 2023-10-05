@@ -107,6 +107,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
             spotId: spotExists.id
         }
     })
+
     const spotOwner = await Spot.findAll({
         where: {
             ownerId: user,
@@ -117,24 +118,21 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
     if(!spotOwner.length) {
         // console.log(spotExists)
         for (let i = 0; i <booking.length; i++) {
+
             let currBooking = booking[i]
             let currBookingStart = currBooking.startDate.getTime()
             let currBookingEnd = currBooking.endDate.getTime()
-            // // console.log('this',)
-            // console.log('real start', compareStart)
-            // console.log('that', )
+
             if (compareStart >= currBookingStart && compareStart <= currBookingEnd) {
                 const errors = new Error("Sorry, this spot is already booked for the specified dates")
-                // err.statusCode(403)
                 errors.errors = { startDate: "Start date conflicts with an existing booking",
                 endDate: "End date conflicts with an existing booking"}
                 delete errors.stack;
                 return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
             };
 
-            if (compareEnd >= currBookingStart && compareStart <= currBookingEnd) {
+            if (compareEnd >= currBookingStart && compareEnd <= currBookingEnd) {
                 const errors = new Error("Sorry, this spot is already booked for the specified dates")
-                // err.statusCode(403)
                 errors.errors = { startDate: "Start date conflicts with an existing booking",
                 endDate: "End date conflicts with an existing booking"}
                 delete errors.stack;
