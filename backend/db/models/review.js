@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         {
           foreignKey: 'spotId'
         })
+
+        Review.belongsTo(models.User,
+          {
+            foreignKey: 'userId'
+          })
     }
   }
   Review.init({
@@ -38,6 +43,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Review',
+    scopes: {
+      'excludeCreated': {
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        }
+      }
+    }
   });
   return Review;
 };
