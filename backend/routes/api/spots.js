@@ -107,10 +107,10 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
             spotId: spotExists.id
         }
     })
-    const spotOwner = await Booking.findAll({
+    const spotOwner = await Spot.findAll({
         where: {
-            spotId: spotId,
-            userId: user
+            ownerId: user,
+            id: spotId
         }
     })
 
@@ -166,28 +166,29 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
         return res.status(404).json({message: "Spot couldn't be found"})
     };
 
-    const notOwnedBookings = await Booking.findOne({
+    const notOwnedBookings = await Booking.findAll({
         where: {
             spotId: spotExists.id
         }
     })
 
-    const spotOwner = await Booking.findAll({
+    const spotOwner = await Spot.findAll({
         where: {
-            spotId: spotId,
-            userId: user
+            id: spotId,
+            ownerId: user
         }
     })
 
     if (spotOwner.length) {
         for( let i = 0; i < spotOwner.length; i++) {
             const currSpot = spotOwner[i];
-
+            console.log('this', currSpot.id)
             const currUser = await User.findByPk(user)
 
             const currBooking = await Booking.findOne({
                 where: {
-                    spotId: currSpot.id
+                    spotId: currSpot.id,
+                    userId: currUser.id
                 }
             })
 
@@ -211,12 +212,17 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
         return res.json({Bookings: payload})
     }
     if (!spotOwner.length) {
-        const data = {
-            spotId: notOwnedBookings.id,
-            startDate: notOwnedBookings.startDate,
-            endDate: notOwnedBookings.endDate
+
+        for( let i = 0; i < notOwnedBookings.length; i++) {
+            const currBooking = notOwnedBookings[i];
+
+            const data = {
+                spotId: currBooking.id,
+                startDate: currBooking.startDate,
+                endDate: currBooking.endDate
+            }
+            payload.push(data)
         }
-        payload.push(data)
         return res.json({Bookings: payload})
     }
 });
