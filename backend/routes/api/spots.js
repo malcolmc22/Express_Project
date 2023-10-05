@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage, Review, sequelize, User, ReviewImage } = require('../../db/models');
+const { Spot, SpotImage, Review, sequelize, User, ReviewImage, Booking } = require('../../db/models');
 
 const router = express.Router();
 
@@ -63,7 +63,79 @@ const validateNewReview = [
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors,
 ]
-//
+// get all bookings for spot on spot id
+router.get('/:spotId/bookings', requireAuth, async(req, res) => {
+    const user = req.user.id;
+
+    const spotId = req.params.spotId;
+
+    const payload = [];
+
+    const spotExists = await Spot.findOne({
+        where: {
+            id: spotId
+        }
+    })
+
+    if (!spotExists || spotExists.length <= 0) {
+        return res.status(404).json({message: "Spot couldn't be found"})
+    };
+
+    const notOwnedBookings = await Booking.findOne({
+        where: {
+            spotId: spotExists.id
+        }
+    })
+
+    const spotOwner = await Booking.findAll({
+        where: {
+            spotId: spotId,
+            userId: user
+        }
+    })
+
+    if (spotOwner.length) {
+        for( let i = 0; i < spotOwner.length; i++) {
+            const currSpot = spotOwner[i];
+
+            const currUser = await User.findByPk(user)
+
+            const currBooking = await Booking.findOne({
+                where: {
+                    spotId: currSpot.id
+                }
+            })
+
+            const data = {
+                User: {
+                    id: currUser.id,
+                    firstName: currUser.firstName,
+                    lastName: currUser.lastName
+                },
+                id: currBooking.id,
+                spotId: currBooking.spotId,
+                userId: currBooking.userId,
+                startDate: currBooking.startDate,
+                endDate: currBooking.endDate,
+                createdAt: currBooking.endDate,
+                updatedAt: currBooking.updatedAt
+            }
+            payload.push(data)
+        }
+
+        return res.json({Bookings: payload})
+    }
+    if (!spotOwner.length) {
+        const data = {
+            spotId: notOwnedBookings.id,
+            startDate: notOwnedBookings.startDate,
+            endDate: notOwnedBookings.endDate
+        }
+        payload.push(data)
+        return res.json({Bookings: payload})
+    }
+});
+
 // create review for spot based on spot id
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res) => {
     const { review, stars } = req.body;
