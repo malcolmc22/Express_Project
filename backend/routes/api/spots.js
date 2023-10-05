@@ -68,17 +68,11 @@ const validateNewReview = [
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res) => {
     const { review, stars } = req.body;
 
-    const { spotId } = req.params.spotId;
+    const  {spotId}  = req.params.spotId;
 
-    const existingReview = await Review.findOne({
-        where: {
-            userId: req.user.id
-        }
-    })
+    const userId = req.user.id;
 
-    if (existingReview.length) res.status(500).json({message: 'User already has a review for this spot'});
-
-    const allSpots = await Spot.findAll({
+    const allSpots = await Spot.findOne({
         where: {
             id: req.params.spotId
         }
@@ -88,11 +82,23 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res)
         return res.status(404).json({message: "Spot couldn't be found"})
     };
 
-    const newReview = await Review.create({spotId, review, stars});
+    const existingReview = await Review.findOne({
+        where: {
+            userId: req.user.id,
+            spotId: allSpots.id
+        }
+    })
+
+    console.log(existingReview)
+    if (existingReview) return res.status(500).json({message: 'User already has a review for this spot'});
 
 
 
-    res.json(newReview)
+    const newReview = await Review.create({spotId: allSpots.id, userId, review, stars});
+
+
+
+    res.status(201).json(newReview)
 });
 
 // all reviews by spot id
@@ -353,11 +359,12 @@ router.get('/:spotId', async (req, res) => {
 
 // create a new spot
 router.post('/', requireAuth, validateSignup, async(req, res) => {
+
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
 
     const newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price})
-    delete validateSignup.stack
-    delete validateSignup.title
+    // delete validateSignup.stack
+
     res.json(newSpot);
 })
 
