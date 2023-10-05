@@ -63,7 +63,7 @@ const validateNewReview = [
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors,
 ]
-
+//
 // create review for spot based on spot id
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res) => {
     const { review, stars } = req.body;
