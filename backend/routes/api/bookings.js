@@ -38,7 +38,7 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
         console.log('here',bookingBelongsToUser.startDate.getTime())
         bookingBelongsToUser.destroy()
 
-        return res.json({message: ' booking belongs Succesfully deleted'})
+        return res.json({message: 'Succesfully deleted'})
     }
 
     const spotBelongsToUser = await Spot.findAll({
@@ -61,7 +61,7 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
             if (checkBelongsToUser) {
                 checkBelongsToUser.destroy()
 
-                return res.json({message: ' spot belongs Succesfully deleted'})
+                return res.json({message: 'Succesfully deleted'})
             }
         }
     }
