@@ -66,7 +66,7 @@ const validateNewReview = [
     handleValidationErrors,
 ]
 
-
+// creating booking based on spot ID
 router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
 
     const user = req.user.id;
@@ -144,6 +144,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
         return res.json(newBooking)
     }
 
+    return res.json('you own the spot')
 });
 
 // get all bookings for spot on spot id
@@ -172,23 +173,30 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
 
     const spotOwner = await Spot.findAll({
         where: {
-            id: spotId,
+            id: spotExists.id,
             ownerId: user
         }
     })
 
+
     if (spotOwner.length) {
-        for( let i = 0; i < spotOwner.length; i++) {
-            const currSpot = spotOwner[i];
-            console.log('this', currSpot.id)
+        const ownedBookings = await Booking.findAll({
+            where:{
+                spotId: spotExists.id
+            }
+        });
+
+        for( let i = 0; i < ownedBookings.length; i++) {
+            const currBooking = ownedBookings[i];
+            // console.log('this', currSpot.id)
             const currUser = await User.findByPk(user)
 
-            const currBooking = await Booking.findOne({
-                where: {
-                    spotId: currSpot.id,
-                    userId: currUser.id
-                }
-            })
+            // const currBooking = await Booking.findOne({
+            //     where: {
+            //         spotId: currSpot.id,
+            //         userId: currUser.id
+            //     }
+            // })
 
             const data = {
                 User: {
@@ -215,7 +223,7 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
             const currBooking = notOwnedBookings[i];
 
             const data = {
-                spotId: currBooking.id,
+                spotId: spotExists.id,
                 startDate: currBooking.startDate,
                 endDate: currBooking.endDate
             }

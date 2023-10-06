@@ -16,18 +16,57 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
 
     const bookingId = req.params.bookingId;
 
-    const bookingBelongsToUser = await Booking.findAll({
+    const bookingExists = await Booking.findOne({
         where: {
-            userId: user.id,
             id: bookingId
         }
     })
 
-    const spotBelongsToUser = await Spot.findAll({
+    if (!bookingExists || bookingExists.length <= 0) {
+        return res.status(404).json({message: "Booking couldn't be found"})
+    };
+
+    const bookingBelongsToUser = await Booking.findOne({
         where: {
-            userId: user
+            userId: user,
+            id: bookingId
         }
     })
+
+    if(bookingBelongsToUser) {
+
+        console.log('here',bookingBelongsToUser.startDate.getTime())
+        bookingBelongsToUser.destroy()
+
+        return res.json({message: ' booking belongs Succesfully deleted'})
+    }
+
+    const spotBelongsToUser = await Spot.findAll({
+        where: {
+            ownerId: user
+        }
+    })
+
+    if (spotBelongsToUser.length) {
+        for (let i = 0; i < spotBelongsToUser.length; i++) {
+            const currSpot = spotBelongsToUser[i];
+
+            const checkBelongsToUser = await Booking.findOne({
+                where: {
+                    spotId: currSpot.id,
+                    id: bookingId
+                }
+            })
+
+            if (checkBelongsToUser) {
+                checkBelongsToUser.destroy()
+
+                return res.json({message: ' spot belongs Succesfully deleted'})
+            }
+        }
+    }
+
+    return res.json('you don\'t own the spot or the booking')
 })
 // edit a booking
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
