@@ -1,4 +1,5 @@
 const express = require('express');
+const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -66,6 +67,41 @@ const validateNewReview = [
     handleValidationErrors,
 ]
 
+const validatePaginations = [
+    check('page')
+        .exists().optional({values: 'falsy'})
+        .isInt({min: 1})
+        .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+        .exists().optional({values: 'falsy'})
+        .isInt({min:1})
+        .withMessage('Size must be greater than or equal to 1'),
+    check("maxLat")
+        .exists().optional({values: 'falsy'})
+        .isFloat({min: -90, max: 90})
+        .withMessage("Maximum latitude is invalid"),
+    check("minLat")
+        .exists().optional({values: 'falsy'})
+        .isFloat({min: -90, max: 90})
+        .withMessage("Minimum latitude is invalid"),
+    check("minLng")
+        .exists().optional({values: 'falsy'})
+        .isFloat({min: -180, max: 180})
+        .withMessage("Maximum longitude is invalid"),
+    check("maxLng")
+        .exists().optional({values: 'falsy'})
+        .isFloat({min: -180, max: 180})
+        .withMessage("Minimum longitude is invalid"),
+    check("minPrice")
+        .exists().optional({values: 'falsy'})
+        .isFloat({min: 0})
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check("maxPrice")
+        .exists().optional({values: 'falsy'})
+        .isFloat({min: 0})
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+]
 // creating booking based on spot ID
 router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
 
@@ -137,7 +173,16 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
                 endDate: "End date conflicts with an existing booking"}
                 delete errors.stack;
                return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
-            }
+            };
+
+            if (compareStart <= currBookingStart && compareEnd >= currBookingEnd) {
+                const errors = new Error("Sorry, this spot is already booked for the specified dates")
+                errors.errors = { startDate: "Start date conflicts with an existing booking",
+                endDate: "End date conflicts with an existing booking"}
+                delete errors.stack;
+               return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
+            };
+
         }
 
         const newBooking = await Booking.create({spotId: spotExists.id, userId: user, startDate, endDate})
@@ -538,10 +583,68 @@ router.post('/', requireAuth, validateSignup, async(req, res) => {
 })
 
 // get all the spots
-router.get('/', async(req, res) => {
+router.get('/', validatePaginations, async(req, res) => {
+    let { size, page, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
 
-    const allSpots = await Spot.findAll()
     const payload = [];
+    const pagination = {};
+    if (!page) page = 1;
+    if (!size) size = 20;
+    if (page != 0) {
+        pagination.limit = size ? size : 20;
+        pagination.offset = page ? size * (page - 1) : 0;
+    }
+    const where = {}
+    const queryObj = {where: {}, ...pagination}
+
+    let customFunc;
+
+    // if (process.env.NODE_ENV === 'production') {
+    //     customFunc = 'num_value'
+    // } else {
+    //     customFunc = 'value'
+    // }
+
+    if (minLat) {
+        // console.log('u hit here')
+        queryObj.where.lat = {
+            [Op.gte]: parseFloat(minLat)
+        }
+        // queryObj.where = sequelize.where(sequelize.fn(customFunc, sequelize.col('lat')), { [Op.gte]: parseFloat(minLat)})
+    };
+
+    if (maxLat) {
+        queryObj.where.lat = {
+            [Op.lte]: parseFloat(maxLat)
+        }
+    };
+
+    if (minLng) {
+        queryObj.where.lat = {
+            [Op.gte]: parseFloat(minLng)
+        }
+    };
+
+    if (maxLng) {
+        queryObj.where.lat = {
+            [Op.lte]: parseFloat(maxLng)
+        }
+    };
+
+    if(minPrice) {
+        queryObj.where.price = {
+            [Op.gte]: parseFloat(minPrice)
+        }
+    };
+
+    if (maxPrice) {
+        queryObj.where.price = {
+            [Op.lte]: parseFloat(maxPrice)
+        }
+    };
+
+    const allSpots = await Spot.findAll(queryObj)
+
     for (let i = 0; i < allSpots.length; i++) {
         const spot = allSpots[i];
 
@@ -584,7 +687,7 @@ router.get('/', async(req, res) => {
         }
         payload.push(data)
     }
-    res.json({Spots: payload})
+    res.json({Spots: payload, page, size: pagination.limit})
 })
 
 
