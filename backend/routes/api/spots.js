@@ -71,8 +71,8 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
 
     const user = req.user.id;
 
-    const spotId = req.params.spotId;
-
+    let spotId = req.params.spotId;
+    spotId = parseInt(spotId);
     const payload = [];
 
     const {startDate, endDate} = req.body;
