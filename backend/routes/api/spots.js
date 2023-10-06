@@ -188,7 +188,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
         return res.json(newBooking)
     }
 
-    return res.json('you own the spot')
+    return res.status(404).json('you own the spot')
 });
 
 // get all bookings for spot on spot id

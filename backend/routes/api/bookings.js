@@ -66,7 +66,7 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
         }
     }
 
-    return res.json('you don\'t own the spot or the booking')
+    return res.status(404).json('you don\'t own the spot or the booking')
 })
 // edit a booking
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
@@ -149,7 +149,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             return res.json(currBooking)
         }
     }
-    return res.json('you do not own this booking')
+    return res.status(404).json('you do not own this booking')
 
 });
 

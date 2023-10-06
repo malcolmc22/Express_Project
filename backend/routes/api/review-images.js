@@ -46,7 +46,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
         }
     }
 
-    return res.json('you don\'t own the image')
+    return res.status(404).json('you don\'t own the image')
 })
 
 module.exports = router;
