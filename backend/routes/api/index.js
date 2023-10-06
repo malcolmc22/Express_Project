@@ -4,6 +4,8 @@ const usersRouter = require('./users');
 const spotsRouter = require('./spots');
 const reviewsRouter = require('./review')
 const bookingsRouter = require('./bookings');
+const reviewImagesRouter = require('./review-images');
+const spotImagesRouter = require('./spot-images');
 
 const { restoreUser } = require('../../utils/auth'); //make this the first before any other middleware or router handlers are connected
 const { setTokenCookie } = require('../../utils/auth');
@@ -12,6 +14,10 @@ const { User } = require('../../db/models');
 const { application } = require('express');
 
 router.use(restoreUser);
+
+router.use('/spot-images', spotImagesRouter);
+
+router.use('/review-images', reviewImagesRouter);
 
 router.use('/bookings', bookingsRouter);
 
