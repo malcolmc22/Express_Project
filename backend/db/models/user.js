@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // // connects to spots bookings
-      User.belongsToMany(models.Spot,
+      User.hasMany(models.Booking,
         {
-          through: models.Booking,
           foreignKey: 'userId',
-          otherKey: 'spotId'
+          onDelete: 'CASCADE',
+          hooks: true
         })
       // // connects to spots reviews
         User.hasMany(models.Review,

@@ -3,13 +3,17 @@ const sessionRouter = require('./session');
 const usersRouter = require('./users');
 const spotsRouter = require('./spots');
 const reviewsRouter = require('./review')
+const bookingsRouter = require('./bookings');
 
 const { restoreUser } = require('../../utils/auth'); //make this the first before any other middleware or router handlers are connected
 const { setTokenCookie } = require('../../utils/auth');
 const { requireAuth } = require('../../utils/auth')
 const { User } = require('../../db/models');
+const { application } = require('express');
 
 router.use(restoreUser);
+
+router.use('/bookings', bookingsRouter);
 
 router.use('/reviews', reviewsRouter);
 
