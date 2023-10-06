@@ -17,7 +17,7 @@ router.use(restoreUser);
 
 router.use('/spot-images', spotImagesRouter);
 
-router.use('review-images', reviewImagesRouter);
+router.use('/review-images', reviewImagesRouter);
 
 router.use('/bookings', bookingsRouter);
 
