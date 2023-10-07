@@ -116,7 +116,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             let currBookingEnd = currBooking.endDate.getTime()
 
             // if it's not the same booking
-            if (currBooking.id != bookingId) {
+            if (currBooking.id != parseInt(bookingId)) {
                 if (compareStart >= currBookingStart && compareStart <= currBookingEnd) {
                     const errors = new Error("Sorry, this spot is already booked for the specified dates")
                     errors.errors = { startDate: "Start date conflicts with an existing booking",
