@@ -75,14 +75,18 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const bookingId = req.params.bookingId;
 
     const { startDate, endDate } = req.body;
+    // call new date on inital start date and end date
     let newDate = new Date(startDate);
     let newDate2 = new Date(endDate);
-    let startDateString = newDate.toDateString();
+    // call toDateString on the two new dates respectively
+    // let startDateString = newDate.toDateString();
     let endDateString = newDate2.toDateString();
-    let newDate3 = new Date(endDateString);
-    let newDate4 = new Date (startDateString)
-    let compareStart = newDate4.getTime();
-    let compareEnd = newDate3.getTime();
+    // // turn those values into new dates
+    // let newDate3 = new Date(endDateString);
+    // let newDate4 = new Date (startDateString)
+    // call getTime on the two new dates to get the values
+    let compareStart = newDate.getTime();
+    let compareEnd = newDate2.getTime();
 
     if ( compareEnd <= compareStart) {
         const err = new Error("Bad Request")
@@ -103,20 +107,20 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     const bookingOwner = await Booking.findAll({
         where: {
-            userId: user,
-            id: bookingId
+            userId: user
         }
     })
 
+    // return res.json(bookingOwner)
     if (bookingOwner.length > 0) {
         for (let i = 0; i <bookingOwner.length; i++) {
-
+            console.log(bookingOwner.length)
             let currBooking = bookingOwner[i]
             let currBookingStart = currBooking.startDate.getTime()
             let currBookingEnd = currBooking.endDate.getTime()
 
             // if it's not the same booking
-            if (currBooking.id != parseInt(bookingId)) {
+            if (currBooking.id != bookingId) {
                 if (compareStart >= currBookingStart && compareStart <= currBookingEnd) {
                     const errors = new Error("Sorry, this spot is already booked for the specified dates")
                     errors.errors = { startDate: "Start date conflicts with an existing booking",
@@ -139,18 +143,35 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
                     endDate: "End date conflicts with an existing booking"}
                     delete errors.stack;
                 return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
-                }
+                };
+
+                if (compareEnd === currBookingStart || compareEnd === currBookingEnd) {
+                    const errors = new Error("Sorry, this spot is already booked for the specified dates")
+                    errors.errors = { startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"}
+                    delete errors.stack;
+                return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
+                };
+
+                if (compareStart === currBookingStart || compareStart === currBookingEnd) {
+                    const errors = new Error("Sorry, this spot is already booked for the specified dates")
+                    errors.errors = { startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"}
+                    delete errors.stack;
+                    return res.status(403).json({message:"Sorry, this spot is already booked for the specified dates", ...errors})
+                };
+
             }
 
             if (Date.now() > currBookingEnd || Date.now() > compareStart) return res.status(403).json({message: `Past bookings can't be modified`});
-
-            currBooking.startDate = compareStart
-            currBooking.endDate = compareEnd
-            currBooking.validate();
-            currBooking.save();
-
-            return res.json(currBooking)
         }
+
+        bookingExists.startDate = compareStart
+        bookingExists.endDate = compareEnd
+        bookingExists.validate();
+        bookingExists.save();
+
+        return res.json(bookingExists)
     }
     return res.status(401).json('you do not own this booking')
 

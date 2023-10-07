@@ -52,11 +52,11 @@ module.exports = {
       city: 'someplacenice',
       state:'new york',
       country:'USOftheA',
-      lat: 40.7128,
-      lng:74.0060,
+      lat: 35.7128,
+      lng:36.0060,
       name: 'rich guy',
       description: 'really cool place',
-      price: 121.15
+      price: 68
     }
    ], {validate: true })
   },
