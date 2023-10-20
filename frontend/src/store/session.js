@@ -30,7 +30,12 @@ export const signupThunk = (user) => async (dispatch) => {
     })
     const data = await res.json();
     dispatch(setSessionUser(data.user));
-    return res
+    if (res.ok) {
+        return res
+    } else {
+        const errors = await res.json();
+        return errors
+    }
 }
 
 export const setSessionUserThunk = (user) => async (dispatch) => {
