@@ -55,12 +55,13 @@ export const setSessionUserThunk = (user) => async (dispatch) => {
             password
         })
     })
-
-    if (res.ok) {
         const data = await res.json()
-        console.log(data)
         dispatch(setSessionUser(data.user))
+    if (res.ok) {
         return res
+    } else {
+        const errors = await res.json()
+        return errors
     }
 }
 
