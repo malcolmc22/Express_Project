@@ -25,7 +25,7 @@ const LoginFormPage = () => {
   };
 
   return (
-    <>
+    <div>
       <h1>Log In</h1>
       <form onSubmit={onSubmit}>
         <label>
@@ -49,7 +49,7 @@ const LoginFormPage = () => {
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 };
 
