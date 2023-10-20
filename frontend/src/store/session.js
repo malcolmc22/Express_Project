@@ -38,6 +38,14 @@ export const signupThunk = (user) => async (dispatch) => {
     }
 }
 
+export const logoutThunk = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+      method: 'DELETE',
+    });
+    dispatch(removeSessionUser());
+    return response;
+  };
+
 export const setSessionUserThunk = (user) => async (dispatch) => {
     const { credential, password } = user
     const res = await csrfFetch('/api/session', {
