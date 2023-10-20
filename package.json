@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/malcolmc22/Express_Project/issues"
   },
-  "homepage": "https://github.com/malcolmc22/Express_Project#readme"
+  "homepage": "https://github.com/malcolmc22/Express_Project#readme",
+  "dependencies": {
+    "js-cookie": "^3.0.5"
+  }
 }
