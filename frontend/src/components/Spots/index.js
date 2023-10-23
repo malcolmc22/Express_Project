@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import * as spotActions from "../../store/spots";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Route, useHistory } from "react-router-dom";
 
 function Spots() {
   const history = useHistory();
@@ -11,7 +11,6 @@ function Spots() {
   useEffect(() => {
     dispatch(spotActions.getSpotsThunk());
   }, []);
-
 
   // if (whyNotWork[0] !== null) {
   //   whyNotWork.map(({ id }) => {
@@ -24,8 +23,7 @@ function Spots() {
         {whyNotWork[0] &&
           whyNotWork.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
-              <div key={id} >
-                <p>{id}</p>
+              <div key={id} id={id} onClick={ () => history.push(`/spots/${id}`)}>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbeLjSzrw7sjmGjAIoq_6F0oKgkrbTLGGaD6rnTcDytg&s" />
                 <div className="spot-info-container">
                   <p>
@@ -37,7 +35,6 @@ function Spots() {
               </div>
             )
           )}
-        <li>test</li>
       </ul>
     </div>
   );

@@ -44,7 +44,6 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </li>
       {isLoaded && sessionLinks}
-      <Spots />
     </ul>
   );
 }
