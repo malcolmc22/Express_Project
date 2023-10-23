@@ -7,7 +7,11 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
 
+import { useDispatch } from "react-redux";
+import Spots from '../Spots/index';
+
 function Navigation({ isLoaded }) {
+  const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
   let sessionLinks;
@@ -40,6 +44,7 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </li>
       {isLoaded && sessionLinks}
+      <Spots />
     </ul>
   );
 }
