@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOTS = 'spots/getSpots';
 const GET_SPOT_BY_ID = '/spots/:spotId'
+const CREATE_SPOT = '/spots/new'
 
 export const getSpots = (spots) => {
     return {
@@ -13,6 +14,13 @@ export const getSpots = (spots) => {
 export const getSpotById = (spot) => {
     return {
         type:GET_SPOT_BY_ID,
+        spot
+    }
+}
+
+export const createSpot = (spot) => {
+    return {
+        type: CREATE_SPOT,
         spot
     }
 }
@@ -35,6 +43,13 @@ export const getSpotByIdThunk = (spotId) => async (dispatch) => {
     return data
 }
 
+export const createSpotThunk = () => async (dispatch) => {
+    const res = await csrfFetch(`api/spots`, {
+        method: 'POST',
+        body: JSON.stringify()
+    });
+
+}
 
 const initialState = { spots: null}
 
@@ -49,7 +64,6 @@ const spotsReducer = (state = initialState, action) => {
             return spotsState;
         }
         case GET_SPOT_BY_ID: {
-
             return action.spot
         }
 
