@@ -9,21 +9,28 @@ import "./Navigation.css";
 
 import { useDispatch } from "react-redux";
 import Spots from '../Spots/index';
+import { useHistory } from "react-router-dom";
 
 function Navigation({ isLoaded }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
+      <div>
+        <div onClick={() => history.push('/spots')}>
+          Create a New Spot
+        </div>
+        <div>
+          <ProfileButton user={sessionUser} />
+        </div>
+      </div>
     );
   } else {
     sessionLinks = (
-      <li>
+      <div>
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
@@ -32,7 +39,7 @@ function Navigation({ isLoaded }) {
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </div>
     );
   }
 

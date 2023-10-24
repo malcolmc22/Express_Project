@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -38,14 +40,14 @@ function ProfileButton({ user }) {
       <button onClick={openMenu}>
         <i className="fas fa-user-ninja" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
+      <div className={ulClassName} ref={ulRef}>
+        <div>Hello, {user.firstName}</div>
+        <div>{user.email}</div>
+        <div onClick={() => history.push('/spots/current')}>Manage Spots</div>
+        <div>
           <button onClick={logout}>Log Out</button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </>
   );
 }

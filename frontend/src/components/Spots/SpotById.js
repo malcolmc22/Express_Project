@@ -1,18 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as spotActions from "../../store/spots";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as reviewActions from "../../store/reviews"
 const SpotbyId = () => {
-
+  const [isLoaded, setIsLoaded] = useState(false)
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spots = useSelector((state) => Object.values(state.spots)[0]);
   const reviews = useSelector((state) => Object.values(state.reviews));
   console.log('reviews', reviews)
+
   useEffect(() => {
-    dispatch(spotActions.getSpotByIdThunk(spotId))
-    dispatch(reviewActions.getReviewsBySpotIdThunk(spotId))
+    dispatch(spotActions.getSpotByIdThunk(spotId)).then(() => setIsLoaded(true))
+    dispatch(reviewActions.getReviewsBySpotIdThunk(spotId)).then(() => setIsLoaded(true))
   }, [dispatch])
   // if (spots) console.log(spots[0].numReviews, 'spots in component')
   // console.log(spotId, 'id')
@@ -28,12 +29,12 @@ const SpotbyId = () => {
   // const {id, name} = spots;
   return (
     <>
-      {spots && reviews && (
+      {isLoaded && reviews && spots && (
         <div>
           <h1>{spots[0].name}</h1>
           <h3>{spots[0].city},{spots[0].state},{spots[0].country} </h3>
           <div className="image-container">
-            {spots[0].SpotImages.map(({url}) => (
+            {spots[0].SpotImages && spots[0].SpotImages.map(({url}) => (
               // {console.log(image.url, 'img')}
               <img src={url} />
             ))}
@@ -50,7 +51,7 @@ const SpotbyId = () => {
           </div>
           <div className="reviews-container">
             <h3> <i className="fa-solid fa-ranking-star"/>{spots.avgRating}  {spots[0].numReviews}</h3>
-              {reviews.map((review) => (
+              {isLoaded && reviews[0] && reviews.map((review) => (
                 <div key={review.id} className="review-container">
                  <div>{review.User.firstName}</div>
                  <div>{new Date(review.createdAt).toDateString()}</div>
