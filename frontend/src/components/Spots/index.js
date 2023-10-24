@@ -10,7 +10,7 @@ function Spots() {
 
   useEffect(() => {
     dispatch(spotActions.getSpotsThunk());
-  }, []);
+  }, [dispatch]);
 
   // if (whyNotWork[0] !== null) {
   //   whyNotWork.map(({ id }) => {
