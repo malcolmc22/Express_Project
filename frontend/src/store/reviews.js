@@ -16,7 +16,7 @@ export const getReviewsBySpotIdThunk = (spotId) => async (dispatch) => {
     return data
 }
 
-const initalState = { reviews: null };
+const initalState = { reviews: {} };
 
 const reviewsReducer = (state = initalState, action) => {
   switch (action.type) {

@@ -575,11 +575,11 @@ router.get('/:spotId', async (req, res) => {
 // create a new spot
 router.post('/', requireAuth, validateSignup, async(req, res) => {
 
-    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const {address, city, state, country, lat, lng, name, description, price, previewImg} = req.body;
 
     const newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price})
     // delete validateSignup.stack
-
+    newSpot.previewImage = previewImg
     res.json(newSpot);
 })
 
@@ -661,7 +661,11 @@ router.get('/', validatePaginations, async(req, res) => {
             }
         })
 
-        const img = await SpotImage.findByPk(spot.id)
+        const img = await SpotImage.findOne({
+            where: {
+                spotId: spot.id
+            }
+        })
 
         let url;
 
@@ -684,7 +688,7 @@ router.get('/', validatePaginations, async(req, res) => {
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
             avgRating: avg,
-            previewImage: url
+            previewImage: url || spot.previewImage
         }
         payload.push(data)
     }

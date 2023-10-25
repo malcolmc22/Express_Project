@@ -10,6 +10,18 @@ const { Spot, SpotImage, Review, sequelize, User, ReviewImage, Booking } = requi
 
 const router = express.Router();
 
+router.post('/', requireAuth, async (req, res) => {
+
+    const user = req.user.id;
+
+    const {id, url} = req.body;
+
+    const newSpotImage = await SpotImage.create({spotId:id, url, preview: true})
+
+    res.json(newSpotImage);
+
+})
+
 router.delete('/:imageId', requireAuth, async (req, res) => {
     const user = req.user.id;
 

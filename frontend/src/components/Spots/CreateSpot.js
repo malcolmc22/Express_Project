@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createSpotThunk } from "../../store/spots";
+import { createSpotThunk, createSpotImageThunk } from "../../store/spots";
 
 function CreateSpot() {
 
@@ -25,9 +25,13 @@ function CreateSpot() {
     //   submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const spotData = {address, city, state, country, lat, lng, name, description, price}
+    const spotData = {address, city, state, country, lat, lng, name, description, price, previewImg}
+    console.log(previewImg)
+    // console.log(lng)
     const newSpot = await dispatch(createSpotThunk(spotData))
-    console.log('newSpot' , newSpot)
+    console.log('newSpot' , newSpot.id)
+    const spotImageData = {id: newSpot.id, url: previewImg }
+    const newPreviewImage = await dispatch(createSpotImageThunk(spotImageData))
   };
   return (
     <div>
@@ -80,7 +84,7 @@ function CreateSpot() {
               Latitude
               <input
                 placeholder="Latitude"
-                type="number"
+                type="text"
                 value={lat}
                 onChange={(e) => setLat(e.target.value)}
               />
@@ -89,7 +93,7 @@ function CreateSpot() {
               Longitude
               <input
                 placeholder="Longitude"
-                type="number"
+                type="text"
                 value={lng}
                 onChange={(e) => setLng(e.target.value)}
               />
