@@ -1,23 +1,34 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createSpotThunk } from "../../store/spots";
 
 function CreateSpot() {
-    const [country, setCountry] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
-    const [desc, setDesc] = useState();
-    const [title, setTitle] = useState();
-    const [price, setPrice] = useState();
-    const [previewImg, setPreviewImg] = useState();
-    const [imgUrl1, setImgUrl1] = useState();
-    const [imgUrl2, setImgUrl2] = useState();
-    const [imgUrl3, setImgUrl3] = useState();
-    const [imgUrl4, setImgUrl4] = useState();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    }
+
+    const dispatch = useDispatch();
+    // states
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
+  const [description, setDescription] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState();
+  const [previewImg, setPreviewImg] = useState();
+  const [imgUrl1, setImgUrl1] = useState();
+  const [imgUrl2, setImgUrl2] = useState();
+  const [imgUrl3, setImgUrl3] = useState();
+  const [imgUrl4, setImgUrl4] = useState();
+  const [errors, setErrors] = useState();
+
+    //   submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const spotData = {address, city, state, country, lat, lng, name, description, price}
+    const newSpot = await dispatch(createSpotThunk(spotData))
+    console.log('newSpot' , newSpot)
+  };
   return (
     <div>
       <div>
@@ -41,10 +52,10 @@ function CreateSpot() {
             <div>
               Street Address
               <input
-                 placeholder="Address"
-                 type="text"
-                 value={address}
-                 onChange={(e) => setAddress(e.target.value)}
+                placeholder="Address"
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div>
@@ -70,8 +81,8 @@ function CreateSpot() {
               <input
                 placeholder="Latitude"
                 type="number"
-                value={latitude}
-                onChange={(e) => setLatitude(e.target.value)}
+                value={lat}
+                onChange={(e) => setLat(e.target.value)}
               />
             </div>
             <div>
@@ -79,8 +90,8 @@ function CreateSpot() {
               <input
                 placeholder="Longitude"
                 type="number"
-                value={longitude}
-                onChange={(e) => setLongitude(e.target.value)}
+                value={lng}
+                onChange={(e) => setLng(e.target.value)}
               />
             </div>
           </div>
@@ -93,8 +104,8 @@ function CreateSpot() {
               <input
                 placeholder="Please write at least 30 characters"
                 type="text"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
           </div>
@@ -106,8 +117,8 @@ function CreateSpot() {
               <input
                 placeholder="Name of your spot"
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
@@ -117,11 +128,12 @@ function CreateSpot() {
               Competitive pricing can help your listing stand out and rank
               higher in search results.
               <div>
-                $ <input
-                    placeholder="Price per night (USD)"
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                ${" "}
+                <input
+                  placeholder="Price per night (USD)"
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
             </div>
@@ -132,42 +144,40 @@ function CreateSpot() {
               Submit a link to at least one photo to publish your spot.{" "}
               <div>
                 <input
-                    placeholder="Preview Image URL"
-                    type="url"
-                    value={previewImg}
-                    onChange={(e) => setPreviewImg(e.target.value)}
+                  placeholder="Preview Image URL"
+                  type="url"
+                  value={previewImg}
+                  onChange={(e) => setPreviewImg(e.target.value)}
                 />
                 <input
-                    placeholder="Image URL"
-                    type="url"
-                    value={imgUrl1}
-                    onChange={(e) => setImgUrl1(e.target.value)}
+                  placeholder="Image URL"
+                  type="url"
+                  value={imgUrl1}
+                  onChange={(e) => setImgUrl1(e.target.value)}
                 />
                 <input
-                    placeholder="Image URL"
-                    type="url"
-                    value={imgUrl2}
-                    onChange={(e) => setImgUrl2(e.target.value)}
+                  placeholder="Image URL"
+                  type="url"
+                  value={imgUrl2}
+                  onChange={(e) => setImgUrl2(e.target.value)}
                 />
                 <input
-                    placeholder="Image URL"
-                    type="url"
-                    value={imgUrl3}
-                    onChange={(e) => setImgUrl3(e.target.value)}
+                  placeholder="Image URL"
+                  type="url"
+                  value={imgUrl3}
+                  onChange={(e) => setImgUrl3(e.target.value)}
                 />
                 <input
-                    placeholder="Image URL"
-                    type="url"
-                    value={imgUrl4}
-                    onChange={(e) => setImgUrl4(e.target.value)}
+                  placeholder="Image URL"
+                  type="url"
+                  value={imgUrl4}
+                  onChange={(e) => setImgUrl4(e.target.value)}
                 />
               </div>
             </div>
           </div>
           <div className="button-container">
-            <button type="submit">
-                Create Spot
-            </button>
+            <button type="submit">Create Spot</button>
           </div>
         </form>
       </div>

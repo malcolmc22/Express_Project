@@ -43,12 +43,22 @@ export const getSpotByIdThunk = (spotId) => async (dispatch) => {
     return data
 }
 
-export const createSpotThunk = () => async (dispatch) => {
-    const res = await csrfFetch(`api/spots`, {
+export const createSpotThunk = (payload) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots`, {
         method: 'POST',
-        body: JSON.stringify()
+        body: JSON.stringify(payload)
     });
 
+    console.log('create spot res', res)
+    if (res.ok) {
+        const data = await res.json();
+        console.log(data, 'this is ok data')
+        return data
+    } else {
+        const errors = await res.json();
+        console.log(errors, 'this is errors')
+        return errors
+    }
 }
 
 const initialState = { spots: null}
