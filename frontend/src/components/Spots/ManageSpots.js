@@ -18,7 +18,7 @@ function ManageSpots() {
   //   return null;
   // }
 
-  console.log("all spots owned", allSpots);
+  // console.log("all spots owned", allSpots);
 
   // const test =
   // console.log(' component test' , test)

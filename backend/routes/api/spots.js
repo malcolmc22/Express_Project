@@ -29,12 +29,12 @@ const validateSignup = [
         .notEmpty()
         .withMessage('Country is required'),
     check('lat')
-        .exists({ checkFalsy: true})
+        // .exists({ checkFalsy: true})
         .not()
         .isInt()
         .withMessage('Latitude is not valid'),
     check('lng')
-        .exists({ checkFalsy: true})
+        // .exists({ checkFalsy: true})
         .not()
         .isInt()
         .withMessage('Longitude is not valid'),
@@ -496,8 +496,8 @@ router.put('/:spotId', requireAuth, validateSignup, async (req, res) => {
         editedSpot.city = city,
         editedSpot.state = state,
         editedSpot.country = country,
-        editedSpot.lat = lat,
-        editedSpot.lng = lng,
+        editedSpot.lat = lat || 1,
+        editedSpot.lng = lng || 1,
         editedSpot.name = name,
         editedSpot.description = description,
         editedSpot.price = price

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createSpotThunk, createSpotImageThunk, addSpotImageThunk } from "../../store/spots";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CreateSpot() {
 
     const dispatch = useDispatch();
+    const history = useHistory();
     // states
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
@@ -25,12 +27,13 @@ function CreateSpot() {
     //   submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const spotData = {address, city, state, country, lat, lng, name, description, price, previewImg}
-    console.log(previewImg)
+    const spotData = {address, city, state, country, lat: lat || 1.1, lng: lng || 1.1, name, description, price, previewImg}
+    // console.log(previewImg)
     // console.log(lng)
     const newSpot = await dispatch(createSpotThunk(spotData))
     console.log('newSpot' , newSpot.id)
-    const spotImageData = {id: newSpot.id, url: previewImg }
+    if (newSpot) {
+      const spotImageData = {id: newSpot.id, url: previewImg }
     const newPreviewImage = await dispatch(createSpotImageThunk(spotImageData))
     const img1 = {id: newSpot.id,url: imgUrl1, preview: false};
     if (imgUrl1)  await dispatch(addSpotImageThunk(img1))
@@ -40,6 +43,12 @@ function CreateSpot() {
     if (imgUrl3) await dispatch(addSpotImageThunk(img3))
     const img4 = {id: newSpot.id, url: imgUrl4, preview: false};
     if (imgUrl4) await dispatch(addSpotImageThunk(img4))
+
+    history.push(`/spots/${newSpot.id}`)
+    } else {
+      console.log('spot was not created')
+    }
+
   };
   return (
     <div>
@@ -159,6 +168,7 @@ function CreateSpot() {
                   placeholder="Preview Image URL"
                   type="url"
                   value={previewImg}
+                  required
                   onChange={(e) => setPreviewImg(e.target.value)}
                 />
                 <input

@@ -52,7 +52,7 @@ export const addSpotImage = (image) => {
 export const getSpotsThunk = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
     const data = await res.json();
-    console.log('this is sptos', data)
+    // console.log('this is sptos', data)
     dispatch(getSpots(data));
     return res
 }
@@ -79,7 +79,7 @@ export const createSpotThunk = (payload) => async (dispatch) => {
         return data
     } else {
         const errors = await res.json();
-        // console.log(errors, 'this is errors')
+        console.log(errors, 'this is errors')
         return errors
     }
 }
@@ -125,8 +125,8 @@ const initialState = { }
 const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_SPOTS: {
-            const spotsState = {...state};
-            console.log(action.spots.Spots, 'this is action')
+            const spotsState = {};
+            // console.log(action.spots.Spots, 'this is action')
             action.spots.Spots.forEach(spot => {
                 spotsState[spot.id] = spot
             });
@@ -137,7 +137,7 @@ const spotsReducer = (state = initialState, action) => {
         }
         case CREATE_SPOT: {
             const newState = {...state}
-            console.log(newState, 'new state in create')
+            // console.log(newState, 'new state in create')
             newState[action.spot.id] = action.spot
             return newState
         }
@@ -145,7 +145,7 @@ const spotsReducer = (state = initialState, action) => {
             const newState = {}
             // console.log(action, 'action')
             action.spots.Spots.forEach(spot => {
-                console.log('this is a spot', spot)
+                // console.log('this is a spot', spot)
                 newState[spot.id] = spot
             });
             return newState

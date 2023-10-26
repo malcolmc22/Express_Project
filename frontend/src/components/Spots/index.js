@@ -24,7 +24,7 @@ function Spots() {
         {allSpots[0] && isLoaded &&
           allSpots.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
-              <div key={id} id={id} onClick={ () => history.push(`/spots/${id}`)}>
+             <div key={id} id={id} onClick={ () => history.push(`/spots/${id}`)}>
                 {/* {console.log(previewImage, 'this is prevew for', name)} */}
 
                 <div className="spot-info-container">
