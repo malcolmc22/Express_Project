@@ -4,6 +4,7 @@ const GET_SPOTS = 'spots/getSpots';
 const GET_SPOT_BY_ID = '/spots/:spotId'
 const CREATE_SPOT = '/spots/new'
 const CREATE_SPOT_IMAGE ='/spots/image'
+const GET_SPOTS_OWNED_BY_USER = 'spots/current';
 
 export const getSpots = (spots) => {
     return {
@@ -33,6 +34,12 @@ export const createSpotImage = (image) => {
     }
 }
 
+export const getSpotsOwnedByUser = (spots) => {
+    return {
+        type: GET_SPOTS_OWNED_BY_USER,
+        spots
+    }
+}
 
 
 export const getSpotsThunk = () => async (dispatch) => {
@@ -78,12 +85,20 @@ export const createSpotImageThunk = (payload) => async (disaptch) => {
 
     console.log ('spot img res', res)
 }
+
+export const getSpotsOwnedByUserThunk = () => async (dispatch) => {
+    const res = await csrfFetch('/api/spots/current')
+    const data = await res.json();
+    // console.log('all the spots', data);
+    dispatch(getSpotsOwnedByUser(data))
+    return data
+}
 const initialState = { }
 
 const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_SPOTS: {
-            const spotsState = {};
+            const spotsState = {...state};
             // console.log(action.spots.Spots, 'this is action')
             action.spots.Spots.forEach(spot => {
                 spotsState[spot.id] = spot
@@ -97,6 +112,14 @@ const spotsReducer = (state = initialState, action) => {
             const newState = {...state}
             console.log(newState, 'new state in create')
             newState[action.spot.id] = action.spot
+            return newState
+        }
+        case GET_SPOTS_OWNED_BY_USER: {
+            const newState = {}
+            // console.log(action, 'action')
+            action.spots.Spots.forEach(spot => {
+                newState[spot.id] = spot
+            });
             return newState
         }
         default: {

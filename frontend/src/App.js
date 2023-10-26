@@ -9,6 +9,7 @@ import Spots from "./components/Spots";
 import * as spotActions from './store/spots'
 import * as reviewActions from './store/reviews'
 import CreateSpot from "./components/Spots/CreateSpot";
+import ManageSpots from "./components/Spots/ManageSpots";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -22,9 +23,11 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded &&
       <Switch>
-        <Route exact path='/' isLoaded={isLoaded} component={Spots} />
+
+        <Route exact path='/spots/current' component={ManageSpots} />
         <Route exact path="/spots/:spotId" isLoaded={isLoaded} component={SpotbyId}/ >
-        <Route  path='/spots' component={CreateSpot} />
+        <Route exact path='/spots' component={CreateSpot} />
+        <Route exact path='/' isLoaded={isLoaded} component={Spots} />
       </Switch>}
     </>
   );

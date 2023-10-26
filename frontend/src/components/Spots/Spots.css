@@ -1,3 +1,4 @@
-div {
-    height: 100px;
+.spot-info-container img {
+    max-height: 100px;
+    max-width: 100px;
 }
