@@ -118,6 +118,7 @@ const spotsReducer = (state = initialState, action) => {
             const newState = {}
             // console.log(action, 'action')
             action.spots.Spots.forEach(spot => {
+                console.log('this is a spot', spot)
                 newState[spot.id] = spot
             });
             return newState

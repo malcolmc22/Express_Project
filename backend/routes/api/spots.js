@@ -418,11 +418,15 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         })
 
-        const imgs = await SpotImage.findByPk(spot.id)
+        const img = await SpotImage.findOne({
+            where: {
+                spotId: spot.id
+            }
+        })
 
         let url;
 
-        if (imgs) url = imgs.url
+        if (img) url = img.url
 
         const avg = sum / all.length
 
@@ -441,7 +445,7 @@ router.get('/current', requireAuth, async (req, res) => {
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
             avgRating: avg,
-            previewImage: url || null
+            previewImage: url || spot.previewImage
         }
         payload.push(data)
     }

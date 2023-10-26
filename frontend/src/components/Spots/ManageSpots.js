@@ -11,9 +11,9 @@ function ManageSpots() {
   useEffect(() => {
     dispatch(getSpotsOwnedByUserThunk()).then(() => setIsLoaded(true));
   }, [dispatch]);
-  if (allSpots.length === 0) {
-    return null;
-  }
+  // if (allSpots.length === 0) {
+  //   return null;
+  // }
 
   console.log("all spots owned", allSpots);
 
@@ -22,11 +22,11 @@ function ManageSpots() {
   return (
       <div>
         <ul>
-            {allSpots[0] && isLoaded &&
+            {allSpots[0] &&
             allSpots.map(
                 ({ id, previewImage, city, state, price, avgRating, name }) => (
                 <div key={id} id={id} onClick={ () => history.push(`/spots/${id}`)}>
-                    {/* {console.log(previewImage, 'this is prevew for', name)} */}
+                    {/* {console.log(previewImage, 'this is prevew for', id)} */}
 
                     <div className="spot-info-container">
                     <img src={previewImage ? previewImage : 'https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?cs=srgb&dl=pexels-pixabay-356079.jpg&fm=jpg'}/>
