@@ -5,7 +5,7 @@ const GET_SPOT_BY_ID = '/spots/:spotId'
 const CREATE_SPOT = '/spots/new'
 const CREATE_SPOT_IMAGE ='/spots/image'
 const GET_SPOTS_OWNED_BY_USER = 'spots/current';
-
+const ADD_SPOT_IMAGE ='/spot/images'
 export const getSpots = (spots) => {
     return {
         type: GET_SPOTS,
@@ -41,11 +41,18 @@ export const getSpotsOwnedByUser = (spots) => {
     }
 }
 
+export const addSpotImage = (image) => {
+    return {
+        type: ADD_SPOT_IMAGE,
+        image
+    }
+}
+
 
 export const getSpotsThunk = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
     const data = await res.json();
-    // console.log('this is sptos', data)
+    console.log('this is sptos', data)
     dispatch(getSpots(data));
     return res
 }
@@ -93,13 +100,33 @@ export const getSpotsOwnedByUserThunk = () => async (dispatch) => {
     dispatch(getSpotsOwnedByUser(data))
     return data
 }
+
+export const addSpotImageThunk = ({id, url, preview}) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${id}/images`, {
+        method: 'POST',
+        body: JSON.stringify({
+            url,
+            preview
+        })
+    })
+
+    if (res.ok) {
+        const data = await res.json();
+        console.log('new img data', data)
+        return data
+    } else {
+        const errors = await res.json();
+        console.log('new spot img err' , errors)
+        return errors
+    }
+}
 const initialState = { }
 
 const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_SPOTS: {
             const spotsState = {...state};
-            // console.log(action.spots.Spots, 'this is action')
+            console.log(action.spots.Spots, 'this is action')
             action.spots.Spots.forEach(spot => {
                 spotsState[spot.id] = spot
             });

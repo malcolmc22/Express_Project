@@ -10,6 +10,7 @@ import * as spotActions from './store/spots'
 import * as reviewActions from './store/reviews'
 import CreateSpot from "./components/Spots/CreateSpot";
 import ManageSpots from "./components/Spots/ManageSpots";
+import UpdateSpot from "./components/Spots/UpdateSpot";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,6 +26,7 @@ function App() {
       <Switch>
 
         <Route exact path='/spots/current' component={ManageSpots} />
+        <Route exact path='/spots/:spotId/update' component={UpdateSpot} />
         <Route exact path="/spots/:spotId" isLoaded={isLoaded} component={SpotbyId}/ >
         <Route exact path='/spots' component={CreateSpot} />
         <Route exact path='/' isLoaded={isLoaded} component={Spots} />
