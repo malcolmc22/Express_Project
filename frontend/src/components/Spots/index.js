@@ -7,10 +7,11 @@ function Spots() {
   const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-  const allSpots = useSelector((state) => Object.values(state.spots));
+  const allSpots = useSelector((state) => state.spots.spots ? Object.values(state.spots.spots) : null);
 
   useEffect(() => {
     dispatch(spotActions.getSpotsThunk()).then(() => setIsLoaded(true));
+    console.log('u hit the dispatch')
   }, [dispatch]);
 
   // if (whyNotWork[0] !== null) {
@@ -21,7 +22,7 @@ function Spots() {
   return (
     <div>
       <ul>
-        {allSpots[0] && isLoaded &&
+        {allSpots && isLoaded &&
           allSpots.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
              <div key={id} id={id} onClick={ () => history.push(`/spots/${id}`)}>

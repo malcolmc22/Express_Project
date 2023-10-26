@@ -16,7 +16,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    dispatch(spotActions.getSpotsThunk()).then(() => setIsLoaded(true));
+    // dispatch(spotActions.getSpotsThunk()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
@@ -25,10 +25,10 @@ function App() {
       {isLoaded &&
       <Switch>
 
-        <Route exact path='/spots/current' component={ManageSpots} />
-        <Route exact path='/spots/:spotId/update' component={UpdateSpot} />
-        <Route exact path="/spots/:spotId" isLoaded={isLoaded} component={SpotbyId}/ >
-        <Route exact path='/spots' component={CreateSpot} />
+        <Route  path='/spots/current' component={ManageSpots} />
+        <Route  path='/spots/:spotId/update' component={UpdateSpot} />
+        <Route  path="/spots/:spotId" isLoaded={isLoaded} component={SpotbyId}/ >
+        <Route path='/spots' component={CreateSpot} />
         <Route exact path='/' isLoaded={isLoaded} component={Spots} />
       </Switch>}
     </>

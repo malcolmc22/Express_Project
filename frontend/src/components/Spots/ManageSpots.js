@@ -10,7 +10,7 @@ function ManageSpots() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
-  const allSpots = useSelector((state) => Object.values(state.spots));
+  const allSpots = useSelector((state) => Object.values(state.spots.spots));
   useEffect(() => {
     dispatch(getSpotsOwnedByUserThunk()).then(() => setIsLoaded(true));
   }, [dispatch]);

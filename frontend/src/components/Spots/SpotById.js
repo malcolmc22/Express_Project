@@ -35,7 +35,7 @@ const SpotbyId = () => {
   // const {id, name} = spots;
   return (
     <>
-      {isLoaded && reviewsLoaded && (
+      {isLoaded && reviewsLoaded && spots[0] && (
         <div>
           <h1>{spots[0].name}</h1>
           <h3>{spots[0].city},{spots[0].state},{spots[0].country} </h3>
@@ -46,7 +46,7 @@ const SpotbyId = () => {
             ))}
           </div>
           <div className="info-container">
-              <h2>Hosted by {spots[0].Owner.firstName} {spots[0].Owner.lastName}</h2>
+              <h2>Hosted by { isLoaded && spots[0].Owner.firstName} { isLoaded && spots[0].Owner.lastName}</h2>
               <div>a bunch of stuff about the spot here</div>
               <div className="reserve-container">
                 <div>${spots[0].price}night</div>

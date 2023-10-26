@@ -33,8 +33,8 @@ function CreateSpot() {
     const newSpot = await dispatch(createSpotThunk(spotData))
     console.log('newSpot' , newSpot.id)
     if (newSpot) {
-      const spotImageData = {id: newSpot.id, url: previewImg }
-    const newPreviewImage = await dispatch(createSpotImageThunk(spotImageData))
+      const spotImageData = {id: newSpot.id, url: previewImg, preview: true }
+    const newPreviewImage = await dispatch(addSpotImageThunk(spotImageData))
     const img1 = {id: newSpot.id,url: imgUrl1, preview: false};
     if (imgUrl1)  await dispatch(addSpotImageThunk(img1))
     const img2 = {id: newSpot.id, url: imgUrl2, preview: false};
