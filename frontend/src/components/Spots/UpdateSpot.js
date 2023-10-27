@@ -16,31 +16,53 @@ function UpdateSpot() {
   const history = useHistory();
   const { spotId } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const [country, setCountry] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
+  const [description, setDescription] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState();
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId)).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+const spot= useSelector((state) => state.spots.spots[0])
   //   const test = useSelector((state) => state.spots)
-  const oldCountry = useSelector((state) => state.spots?.spots[0]?.country);
-  // console.log("test", oldCountry);
-  const oldaddress = useSelector((state) => state.spots.spots[0]?.address);
-  const oldCity = useSelector((state) => state.spots?.spots[0]?.city);
-  const oldState = useSelector((state) => state.spots?.spots[0]?.state);
-  const oldDesc = useSelector((state) => state.spots?.spots[0]?.description);
-  const oldName = useSelector((state) => state.spots?.spots[0]?.name);
-  const oldPrice = useSelector((state) => state.spots?.spots[0]?.price);
+  // put this in a use effect, and make it so that when the state changes, it does the thing
+  useEffect(() => {
+    if (spot) {
+      setCountry(spot.country)
+      setAddress(spot.address)
+      setCity(spot.city)
+      setState(spot.state)
+      setDescription(spot.description)
+      setName(spot.name)
+      setPrice(spot.price)
+    }
+  }, [spot])
+  // const oldCountry = useSelector((state) => state.spots?.spots[0]?.country);
+  // // console.log("test", oldCountry);
+  // const oldaddress = useSelector((state) => state.spots.spots[0]?.address);
+  // const oldCity = useSelector((state) => state.spots?.spots[0]?.city);
+  // const oldState = useSelector((state) => state.spots?.spots[0]?.state);
+  // const oldDesc = useSelector((state) => state.spots?.spots[0]?.description);
+  // const oldName = useSelector((state) => state.spots?.spots[0]?.name);
+  // const oldPrice = useSelector((state) => state.spots?.spots[0]?.price);
   // const oldPreview = useSelector((state) => state.spots?.spots[0].SpotImages[0]);
   // console.log("oldpreview", oldPreview);
 
-  const [country, setCountry] = useState(oldCountry);
-  const [address, setAddress] = useState(oldaddress);
-  const [city, setCity] = useState(oldCity);
-  const [state, setState] = useState(oldState);
-  const [lat, setLat] = useState();
-  const [lng, setLng] = useState();
-  const [description, setDescription] = useState(oldDesc);
-  const [name, setName] = useState(oldName);
-  const [price, setPrice] = useState(oldPrice);
+  // const [country, setCountry] = useState(oldCountry);
+  // const [address, setAddress] = useState(oldaddress);
+  // const [city, setCity] = useState(oldCity);
+  // const [state, setState] = useState(oldState);
+  // const [lat, setLat] = useState();
+  // const [lng, setLng] = useState();
+  // const [description, setDescription] = useState(oldDesc);
+  // const [name, setName] = useState(oldName);
+  // const [price, setPrice] = useState(oldPrice);
   // const [previewImg, setPreviewImg] = useState();
   // const [imgUrl1, setImgUrl1] = useState();
   // const [imgUrl2, setImgUrl2] = useState();
@@ -83,9 +105,9 @@ function UpdateSpot() {
       console.log("spot was not created");
     }
   };
-  if (oldCountry === undefined) {
-    return null;
-  }
+  // if (oldCountry === undefined) {
+  //   return null;
+  // }
   return (
     <div>
       <div>

@@ -145,7 +145,7 @@ export const updateSpotThunk = (payload, spotId) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        console.log('this is updated data', data)
+        // console.log('this is updated data', data)
         dispatch(updateSpot(payload))
         return data
     } else {
@@ -194,11 +194,13 @@ const spotsReducer = (state = initialState, action) => {
             console.log(action.spot, 'action spot')
             return {...state, spots: {...state.spots.spots, ...action.spot}}
         }
-        // case UPDATE_SPOT: {
-        //     const newState = {...state, spots: {...state.spots.spots}}
-        //     newState[action.spot.id] = action.spot
-        //     return newState
-        // }
+        case UPDATE_SPOT: {
+            const newState = {...state, spots: {...state.spots.spots}}
+            console.log('state', state.spots.spots)
+            console.log('action', )
+            newState[action.spot.id] = action.spot
+            return newState
+        }
         case GET_SPOTS_OWNED_BY_USER: {
             // const newState = {}
             // // console.log(action, 'action')
