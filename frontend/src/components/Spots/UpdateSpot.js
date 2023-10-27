@@ -17,9 +17,9 @@ function UpdateSpot() {
   }, [dispatch])
 
 //   const test = useSelector((state) => state.spots)
-  const oldCountry = useSelector((state) => state.spots.spots.country)
-//   console.log('test', oldCountry)
-//   const oldaddress = useSelector((state) => state.spots[spotId].address)
+  const oldCountry = useSelector((state) => state.spots.spots[0])
+  console.log('test', oldCountry)
+  const oldaddress = useSelector((state) => oldCountry?state.spots.spots[0].address : null )
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
@@ -29,7 +29,7 @@ function UpdateSpot() {
   // console.log('spot id', spotId)
 
   const [country, setCountry] = useState('');
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(oldaddress);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [lat, setLat] = useState();
@@ -80,7 +80,9 @@ function UpdateSpot() {
       console.log("spot was not created");
     }
   };
-if (!oldCountry) return null
+if (oldCountry === undefined) {
+  return null
+} else {
   return (
     <div>
       <div>
@@ -235,6 +237,7 @@ if (!oldCountry) return null
       </div>
     </div>
   );
+  }
 }
 
 export default UpdateSpot;
