@@ -43,31 +43,6 @@ const spot= useSelector((state) => state.spots.spots[0])
       setPrice(spot.price)
     }
   }, [spot])
-  // const oldCountry = useSelector((state) => state.spots?.spots[0]?.country);
-  // // console.log("test", oldCountry);
-  // const oldaddress = useSelector((state) => state.spots.spots[0]?.address);
-  // const oldCity = useSelector((state) => state.spots?.spots[0]?.city);
-  // const oldState = useSelector((state) => state.spots?.spots[0]?.state);
-  // const oldDesc = useSelector((state) => state.spots?.spots[0]?.description);
-  // const oldName = useSelector((state) => state.spots?.spots[0]?.name);
-  // const oldPrice = useSelector((state) => state.spots?.spots[0]?.price);
-  // const oldPreview = useSelector((state) => state.spots?.spots[0].SpotImages[0]);
-  // console.log("oldpreview", oldPreview);
-
-  // const [country, setCountry] = useState(oldCountry);
-  // const [address, setAddress] = useState(oldaddress);
-  // const [city, setCity] = useState(oldCity);
-  // const [state, setState] = useState(oldState);
-  // const [lat, setLat] = useState();
-  // const [lng, setLng] = useState();
-  // const [description, setDescription] = useState(oldDesc);
-  // const [name, setName] = useState(oldName);
-  // const [price, setPrice] = useState(oldPrice);
-  // const [previewImg, setPreviewImg] = useState();
-  // const [imgUrl1, setImgUrl1] = useState();
-  // const [imgUrl2, setImgUrl2] = useState();
-  // const [imgUrl3, setImgUrl3] = useState();
-  // const [imgUrl4, setImgUrl4] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import * as spotActions from "../../store/spots";
 import { Route, useHistory } from "react-router-dom";
 import './Spots.css'
+import { Tooltip } from "react-tooltip";
 function Spots() {
   const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -11,7 +12,7 @@ function Spots() {
 
   useEffect(() => {
     dispatch(spotActions.getSpotsThunk()).then(() => setIsLoaded(true));
-    console.log('u hit the dispatch')
+    // console.log('u hit the dispatch')
   }, [dispatch]);
 
   // if (whyNotWork[0] !== null) {
@@ -28,14 +29,15 @@ function Spots() {
              <div key={id} id={id} onClick={ () => history.push(`/spots/${id}`)}>
                 {/* {console.log(previewImage, 'this is prevew for', name)} */}
 
-                <div className="spot-info-container">
-                  <img src={previewImage ? previewImage : 'https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?cs=srgb&dl=pexels-pixabay-356079.jpg&fm=jpg'}/>
-                  <p>
-                    {city}, {state}
-                  </p>
-                  <p>{avgRating}</p>
-                  <p>{price}</p>
-                </div>
+                  <div className="spot-info-container" title={name}>
+                    <img src={previewImage ? previewImage : 'https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?cs=srgb&dl=pexels-pixabay-356079.jpg&fm=jpg'}/>
+                    <p>
+                      {city}, {state}
+                    </p>
+                    <p><i className="fa-solid fa-star"></i> {avgRating ? avgRating.toFixed(1) : 'New'}</p>
+                    <p>{price} night</p>
+                  </div>
+
               </div>
             )
           )}

@@ -97,7 +97,7 @@ function CreateSpot() {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
-            <div>
+            {/* <div>
               Latitude
               <input
                 placeholder="Latitude"
@@ -114,7 +114,7 @@ function CreateSpot() {
                 value={lng}
                 onChange={(e) => setLng(e.target.value)}
               />
-            </div>
+            </div> */}
           </div>
           <div className="description-container">
             <h2>Describe your place to guests</h2>

@@ -44,7 +44,7 @@ function CreateReview() {
             <i onClick={(e) => setStars(stars === 0 ? 0 : stars - 1)} className="fa-solid fa-caret-down" />
             {<div> Stars: {stars} </div>}
         </div>
-        <button type="submit">Submit Your Review</button>
+        <button type="submit" disabled={review.length < 10 && stars < 1}>Submit Your Review</button>
       </div>
     </form>
   );

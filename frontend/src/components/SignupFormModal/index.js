@@ -15,11 +15,11 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
+      const newUser = await dispatch(
         sessionActions.signupThunk({
           email,
           username,
@@ -28,17 +28,19 @@ function SignupFormModal() {
           password,
         })
       )
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            setErrors(data.errors);
-          }
-        });
-    }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      if (newUser.message) {
+        console.log('errors', newUser)
+        setErrors(newUser)
+        console.log('new user', errors)
+      } else {
+        closeModal()
+      }
+    } else {
+    setErrors({
+      confirmPassword:
+        "Confirm Password field must be the same as the Password field",
     });
+  }
   };
 
   return (
@@ -54,7 +56,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.errors && <p>{errors.errors.email}</p>}
         <label>
           Username
           <input
@@ -64,7 +66,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.errors && <p>{errors.errors.username}</p>}
         <label>
           First Name
           <input
@@ -74,7 +76,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.errors && <p>{errors.errors.firstName}</p>}
         <label>
           Last Name
           <input
@@ -84,7 +86,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.errors && <p>{errors.errors.lastName}</p>}
         <label>
           Password
           <input
@@ -94,7 +96,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.errors && <p>{errors.errors.password}</p>}
         <label>
           Confirm Password
           <input
@@ -104,10 +106,22 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button type="submit">Sign Up</button>
+        {errors.errors && <p>{errors.errors.confirmPassword}</p>}
+        <button
+          type="submit"
+          disabled={
+            email.length < 0 ||
+            username.length < 0 ||
+            firstName.length < 0 ||
+            lastName.length < 0 ||
+            password.length < 0 ||
+            confirmPassword.length < 0 ||
+            username.length < 4 ||
+            password.length < 6
+          }
+        >
+          Sign Up
+        </button>
       </form>
     </>
   );

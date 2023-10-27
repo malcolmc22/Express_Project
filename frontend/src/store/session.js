@@ -28,9 +28,10 @@ export const signupThunk = (user) => async (dispatch) => {
       password,
     }),
   });
-  const data = await res.json();
-  dispatch(setSessionUser(data.user));
+
   if (res.ok) {
+    const data = await res.json();
+    dispatch(setSessionUser(data.user));
     return res;
   } else {
     const errors = await res.json();
