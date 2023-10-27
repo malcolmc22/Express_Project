@@ -194,13 +194,13 @@ const spotsReducer = (state = initialState, action) => {
             console.log(action.spot, 'action spot')
             return {...state, spots: {...state.spots.spots, ...action.spot}}
         }
-        case UPDATE_SPOT: {
-            const newState = {...state, spots: {...state.spots.spots}}
-            console.log('state', state.spots.spots)
-            console.log('action', )
-            newState[action.spot.id] = action.spot
-            return newState
-        }
+        // case UPDATE_SPOT: {
+        //     const newState = {...state, spots: {...state.spots.spots}}
+        //     console.log('state', state.spots.spots)
+        //     console.log('action', )
+        //     newState[action.spot.id] = action.spot
+        //     return newState
+        // }
         case GET_SPOTS_OWNED_BY_USER: {
             // const newState = {}
             // // console.log(action, 'action')

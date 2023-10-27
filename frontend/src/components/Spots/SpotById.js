@@ -12,7 +12,7 @@ const SpotbyId = () => {
   const { spotId } = useParams();
   const spots = useSelector((state) => Object.values(state.spots)[0]);
   const reviews = useSelector((state) => Object.values(state.reviews));
-  const currUserId = useSelector((state) => state.session.user.id)
+  const currUserId = useSelector((state) => state.session.user)
   // console.log('spots', spots)
   // const hasReview = reviews? reviews.find((review) => review.User.id === currUserId) : []
   // console.log('reviews', reviews)
@@ -51,13 +51,13 @@ const SpotbyId = () => {
               <div className="reserve-container">
                 <div>${spots[0].price}night</div>
                 <div> <i className="fa-solid fa-ranking-star"/>{spots[0].avgRating}</div>
-                <div>{spots[0].numReviews}</div>
+                <div>{spots[0].numReviews ? spots[0].numReviews : 'New'} { spots[0].numReviews > 1 ? 'Reviews' : spots[0].numReviews === 1 ? 'Review' : ''}</div>
                 <button onClick={() => alert('Feature Coming Soon...')}> Reserve </button>
               </div>
           </div>
           <div className="reviews-container">
-            {!(reviews.find((review) => review.User.id === currUserId)) && <OpenModalButton buttonText='Create a Review' modalComponent={<CreateReview />}/>}
-            <h3> <i className="fa-solid fa-ranking-star"/>{spots.avgRating}  {spots[0].numReviews}</h3>
+            {currUserId && !(reviews.find((review) => review.User.id === currUserId.id)) && <OpenModalButton spotId={spotId} buttonText='Post Your Review' modalComponent={<CreateReview />}/>}
+            <h3> <i className="fa-solid fa-ranking-star"/>{spots.avgRating}  {spots[0].numReviews ? spots[0].numReviews : 'New'} { spots[0].numReviews > 1 ? 'Reviews' : spots[0].numReviews === 1 ? 'Review' : ''}</h3>
               {reviewsLoaded && reviews[0] && reviews.map((review) => (
                 <div key={review.id} className="review-container">
                  <div>{review.User.firstName}</div>
@@ -65,6 +65,7 @@ const SpotbyId = () => {
                  <div>{review.review}</div>
                 </div>
               ))}
+              {!reviews[0] && <div>Be the first to post a review!</div>}
           </div>
         </div>
       )}
