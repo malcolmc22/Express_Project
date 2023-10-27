@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createSpotThunk, createSpotImageThunk } from "../../store/spots";
+import { createSpotThunk, createSpotImageThunk, getSpotByIdThunk } from "../../store/spots";
 import { useParams } from "react-router-dom/";
 
 import { updateSpotThunk, addSpotImageThunk } from "../../store/spots";
 import { useHistory } from "react-router-dom";
 
 function UpdateSpot() {
-
+    const dispatch = useDispatch();
+    const history = useHistory();
   const { spotId } = useParams();
+    const [isLoaded, setIsLoaded] = useState(false)
+  useEffect(() => {
+    dispatch(getSpotByIdThunk(spotId)).then(()=> setIsLoaded(true))
+  }, [dispatch])
+
 //   const test = useSelector((state) => state.spots)
-  const oldCountry = useSelector((state) => state.spots[spotId] && state.spots[spotId].country)
-  const oldaddress = useSelector((state) => state.spots[spotId] && state.spots[spotId].address)
+  const oldCountry = useSelector((state) => state.spots.spots.country)
+//   console.log('test', oldCountry)
+//   const oldaddress = useSelector((state) => state.spots[spotId].address)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
 //   const oldCountry = useSelector((state) => state.spots[spotId].country)
-  const history = useHistory();
+
   // console.log('spot id', spotId)
-  const dispatch = useDispatch();
-  const [country, setCountry] = useState(oldCountry);
+
+  const [country, setCountry] = useState('');
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -73,7 +80,7 @@ function UpdateSpot() {
       console.log("spot was not created");
     }
   };
-
+if (!oldCountry) return null
   return (
     <div>
       <div>

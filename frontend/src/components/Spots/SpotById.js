@@ -13,9 +13,9 @@ const SpotbyId = () => {
   const spots = useSelector((state) => Object.values(state.spots)[0]);
   const reviews = useSelector((state) => Object.values(state.reviews));
   const currUserId = useSelector((state) => state.session.user.id)
-  console.log('spots', spots)
+  // console.log('spots', spots)
   // const hasReview = reviews? reviews.find((review) => review.User.id === currUserId) : []
-  console.log('reviews', reviews)
+  // console.log('reviews', reviews)
 
   useEffect(() => {
     dispatch(spotActions.getSpotByIdThunk(spotId)).then(() => setIsLoaded(true))
@@ -42,7 +42,7 @@ const SpotbyId = () => {
           <div className="image-container">
             {spots[0].SpotImages && spots[0].SpotImages.map(({url}) => (
               // {console.log(image.url, 'img')}
-              <img src={url} />
+              <img key={url} src={url} />
             ))}
           </div>
           <div className="info-container">
