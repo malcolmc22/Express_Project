@@ -41,7 +41,7 @@ function ManageSpots() {
                     </div>
                     <div className="update-and-delete-container">
                         <button onClick={() => history.push(`/spots/${id}/update`)}>Update</button>
-                        <button onClick={() => history.push(`spots/${id}/delete`)}>Delete</button>
+                        <button onClick={() => history.push(`/spots/${id}/delete`)}>Delete</button>
                     </div>
                 </div>
                 )

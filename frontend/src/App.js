@@ -11,6 +11,7 @@ import * as reviewActions from './store/reviews'
 import CreateSpot from "./components/Spots/CreateSpot";
 import ManageSpots from "./components/Spots/ManageSpots";
 import UpdateSpot from "./components/Spots/UpdateSpot";
+import DeleteSpot from "./components/Spots/DeleteSpot";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +27,7 @@ function App() {
       <Switch>
 
         <Route  path='/spots/current' component={ManageSpots} />
+        <Route path='/spots/:spotId/delete' component={DeleteSpot} />
         <Route  path='/spots/:spotId/update' component={UpdateSpot} />
         <Route  path="/spots/:spotId" isLoaded={isLoaded} component={SpotbyId}/ >
         <Route path='/spots' component={CreateSpot} />

@@ -7,6 +7,7 @@ const CREATE_SPOT_IMAGE ='/spots/image'
 const GET_SPOTS_OWNED_BY_USER = 'spots/current';
 const ADD_SPOT_IMAGE ='/spot/images'
 const UPDATE_SPOT = '/spots/:spotId'
+const DELETE_SPOT = '/spots/:spotId/delete'
 
 export const getSpots = (spots) => {
     return {
@@ -57,6 +58,12 @@ export const updateSpot = (spot) => {
     }
 }
 
+export const deleteSpot = (spotId) => {
+    return {
+        type: DELETE_SPOT,
+        spotId
+    }
+}
 
 export const getSpotsThunk = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
@@ -144,6 +151,22 @@ export const updateSpotThunk = (payload, spotId) => async (dispatch) => {
     } else {
         const errors = await res.json();
         console.log('this is errors from update', errors);
+        return errors
+    }
+}
+
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        // console.log('delete data', data)
+        dispatch(deleteSpot(spotId))
+    } else {
+        const errors = await res.json();
+        // console.log('delete errors', errors)
         return errors
     }
 }
