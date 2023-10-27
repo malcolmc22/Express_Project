@@ -47,7 +47,7 @@ const SpotbyId = () => {
           </div>
           <div className="info-container">
               <h2>Hosted by { isLoaded && spots[0].Owner.firstName} { isLoaded && spots[0].Owner.lastName}</h2>
-              <div>a bunch of stuff about the spot here</div>
+              <div>{spots[0].description}</div>
               <div className="reserve-container">
                 <div>${spots[0].price}night</div>
                 <div> <i className="fa-solid fa-ranking-star"/>{spots[0].avgRating}</div>

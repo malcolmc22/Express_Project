@@ -1,47 +1,51 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createSpotThunk, createSpotImageThunk, getSpotByIdThunk } from "../../store/spots";
+import {
+  createSpotThunk,
+  createSpotImageThunk,
+  getSpotByIdThunk,
+} from "../../store/spots";
 import { useParams } from "react-router-dom/";
 
 import { updateSpotThunk, addSpotImageThunk } from "../../store/spots";
 import { useHistory } from "react-router-dom";
 
 function UpdateSpot() {
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { spotId } = useParams();
-    const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(getSpotByIdThunk(spotId)).then(()=> setIsLoaded(true))
-  }, [dispatch])
+    dispatch(getSpotByIdThunk(spotId)).then(() => setIsLoaded(true));
+  }, [dispatch]);
 
-//   const test = useSelector((state) => state.spots)
-  const oldCountry = useSelector((state) => state.spots.spots[0])
-  console.log('test', oldCountry)
-  const oldaddress = useSelector((state) => oldCountry?state.spots.spots[0].address : null )
-//   const oldCountry = useSelector((state) => state.spots[spotId].country)
-//   const oldCountry = useSelector((state) => state.spots[spotId].country)
-//   const oldCountry = useSelector((state) => state.spots[spotId].country)
-//   const oldCountry = useSelector((state) => state.spots[spotId].country)
-//   const oldCountry = useSelector((state) => state.spots[spotId].country)
+  //   const test = useSelector((state) => state.spots)
+  const oldCountry = useSelector((state) => state.spots?.spots[0]?.country);
+  // console.log("test", oldCountry);
+  const oldaddress = useSelector((state) => state.spots.spots[0]?.address);
+  const oldCity = useSelector((state) => state.spots?.spots[0]?.city);
+  const oldState = useSelector((state) => state.spots?.spots[0]?.state);
+  const oldDesc = useSelector((state) => state.spots?.spots[0]?.description);
+  const oldName = useSelector((state) => state.spots?.spots[0]?.name);
+  const oldPrice = useSelector((state) => state.spots?.spots[0]?.price);
+  // const oldPreview = useSelector((state) => state.spots?.spots[0].SpotImages[0]);
+  // console.log("oldpreview", oldPreview);
 
-  // console.log('spot id', spotId)
-
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState(oldCountry);
   const [address, setAddress] = useState(oldaddress);
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [city, setCity] = useState(oldCity);
+  const [state, setState] = useState(oldState);
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState();
-  const [previewImg, setPreviewImg] = useState();
-  const [imgUrl1, setImgUrl1] = useState();
-  const [imgUrl2, setImgUrl2] = useState();
-  const [imgUrl3, setImgUrl3] = useState();
-  const [imgUrl4, setImgUrl4] = useState();
+  const [description, setDescription] = useState(oldDesc);
+  const [name, setName] = useState(oldName);
+  const [price, setPrice] = useState(oldPrice);
+  // const [previewImg, setPreviewImg] = useState();
+  // const [imgUrl1, setImgUrl1] = useState();
+  // const [imgUrl2, setImgUrl2] = useState();
+  // const [imgUrl3, setImgUrl3] = useState();
+  // const [imgUrl4, setImgUrl4] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,34 +59,33 @@ function UpdateSpot() {
       name,
       description,
       price,
-      previewImg,
     };
     const updatedSpot = await dispatch(updateSpotThunk(spotData, spotId));
 
     if (updatedSpot) {
-      const spotImageData = {
-        id: updatedSpot.id,
-        url: previewImg,
-        preview: true,
-      };
-      const newPreviewImage = await dispatch(addSpotImageThunk(spotImageData));
-      const img1 = { id: updatedSpot.id, url: imgUrl1, preview: false };
-      if (imgUrl1) await dispatch(addSpotImageThunk(img1));
-      const img2 = { id: updatedSpot.id, url: imgUrl2, preview: false };
-      if (imgUrl2) await dispatch(addSpotImageThunk(img2));
-      const img3 = { id: updatedSpot.id, url: imgUrl3, preview: false };
-      if (imgUrl3) await dispatch(addSpotImageThunk(img3));
-      const img4 = { id: updatedSpot.id, url: imgUrl4, preview: false };
-      if (imgUrl4) await dispatch(addSpotImageThunk(img4));
+      // const spotImageData = {
+      //   id: updatedSpot.id,
+      //   url: previewImg,
+      //   preview: true,
+      // };
+      // const newPreviewImage = await dispatch(addSpotImageThunk(spotImageData));
+      // const img1 = { id: updatedSpot.id, url: imgUrl1, preview: false };
+      // if (imgUrl1) await dispatch(addSpotImageThunk(img1));
+      // const img2 = { id: updatedSpot.id, url: imgUrl2, preview: false };
+      // if (imgUrl2) await dispatch(addSpotImageThunk(img2));
+      // const img3 = { id: updatedSpot.id, url: imgUrl3, preview: false };
+      // if (imgUrl3) await dispatch(addSpotImageThunk(img3));
+      // const img4 = { id: updatedSpot.id, url: imgUrl4, preview: false };
+      // if (imgUrl4) await dispatch(addSpotImageThunk(img4));
 
       history.push(`/spots/${updatedSpot.id}`);
     } else {
       console.log("spot was not created");
     }
   };
-if (oldCountry === undefined) {
-  return null
-} else {
+  if (oldCountry === undefined) {
+    return null;
+  }
   return (
     <div>
       <div>
@@ -130,24 +133,6 @@ if (oldCountry === undefined) {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
-            <div>
-              Latitude
-              <input
-                placeholder="Latitude"
-                type="text"
-                value={lat}
-                onChange={(e) => setLat(e.target.value)}
-              />
-            </div>
-            <div>
-              Longitude
-              <input
-                placeholder="Longitude"
-                type="text"
-                value={lng}
-                onChange={(e) => setLng(e.target.value)}
-              />
-            </div>
           </div>
           <div className="description-container">
             <h2>Describe your place to guests</h2>
@@ -192,44 +177,7 @@ if (oldCountry === undefined) {
               </div>
             </div>
           </div>
-          <div className="url-container">
-            <h2>Liven up your spot with photos</h2>
-            <div>
-              Submit a link to at least one photo to publish your spot.{" "}
-              <div>
-                <input
-                  placeholder="Preview Image URL"
-                  type="url"
-                  value={previewImg}
-                  onChange={(e) => setPreviewImg(e.target.value)}
-                />
-                <input
-                  placeholder="Image URL"
-                  type="url"
-                  value={imgUrl1}
-                  onChange={(e) => setImgUrl1(e.target.value)}
-                />
-                <input
-                  placeholder="Image URL"
-                  type="url"
-                  value={imgUrl2}
-                  onChange={(e) => setImgUrl2(e.target.value)}
-                />
-                <input
-                  placeholder="Image URL"
-                  type="url"
-                  value={imgUrl3}
-                  onChange={(e) => setImgUrl3(e.target.value)}
-                />
-                <input
-                  placeholder="Image URL"
-                  type="url"
-                  value={imgUrl4}
-                  onChange={(e) => setImgUrl4(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
+
           <div className="button-container">
             <button type="submit">Update Spot</button>
           </div>
@@ -237,7 +185,6 @@ if (oldCountry === undefined) {
       </div>
     </div>
   );
-  }
 }
 
 export default UpdateSpot;
