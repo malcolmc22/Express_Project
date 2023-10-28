@@ -18,7 +18,7 @@ const SpotbyId = () => {
   const sortedReviews = reviews?.sort(function(a,b) {
     return new Date(b.createdAt) - new Date(a.createdAt)
   })
-  console.log(sortedReviews, 'test')
+  // console.log(sortedReviews, 'test')
   // console.log('spots', spots[0])
   // console.log()
   const currUserId = useSelector((state) => state.session.user)

@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_REVIEWS_BY_SPOT_ID = "/reviews/getReviews";
 const MAKE_REVIEW = "/reviews/makeReview"
 const DELETE_REVIEW ='/reviews/deleteReview'
+
 export const getReviewsBySpotId = (reviews) => {
     return {
         type:GET_REVIEWS_BY_SPOT_ID,
