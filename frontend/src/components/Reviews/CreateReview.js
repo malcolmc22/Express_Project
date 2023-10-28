@@ -7,7 +7,7 @@ function CreateReview() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
-  const [stars, setStars] = useState(0);
+  const [stars, setStars] = useState(1);
   let test = "fa-regular fa-star";
   function starFill(test) {
     if (test) {
@@ -44,7 +44,7 @@ function CreateReview() {
             <i onClick={(e) => setStars(stars === 0 ? 0 : stars - 1)} className="fa-solid fa-caret-down" />
             {<div> Stars: {stars} </div>}
         </div>
-        <button type="submit" disabled={review.length < 10 && stars < 1}>Submit Your Review</button>
+        <button type="submit" disabled={review.length < 10 || stars < 1}>Submit Your Review</button>
       </div>
     </form>
   );

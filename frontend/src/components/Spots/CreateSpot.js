@@ -22,7 +22,7 @@ function CreateSpot() {
   const [imgUrl2, setImgUrl2] = useState();
   const [imgUrl3, setImgUrl3] = useState();
   const [imgUrl4, setImgUrl4] = useState();
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState({});
 
     //   submit
   const handleSubmit = async (e) => {
@@ -31,8 +31,8 @@ function CreateSpot() {
     // console.log(previewImg)
     // console.log(lng)
     const newSpot = await dispatch(createSpotThunk(spotData))
-    console.log('newSpot' , newSpot.id)
-    if (newSpot) {
+    // console.log('newSpot' , newSpot.id)
+    if (newSpot.id) {
       const spotImageData = {id: newSpot.id, url: previewImg, preview: true }
     const newPreviewImage = await dispatch(addSpotImageThunk(spotImageData))
     const img1 = {id: newSpot.id,url: imgUrl1, preview: false};
@@ -46,7 +46,8 @@ function CreateSpot() {
 
     history.push(`/spots/${newSpot.id}`)
     } else {
-      console.log('spot was not created')
+      // console.log('spot was not created', newSpot.errors)
+      setErrors(newSpot.errors)
     }
 
   };
@@ -70,6 +71,7 @@ function CreateSpot() {
                 placeholder="Country"
               />
             </div>
+            {errors.country && <div className="create-errors">{errors.country}</div>}
             <div>
               Street Address
               <input
@@ -79,6 +81,7 @@ function CreateSpot() {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
+            {errors.address && <div className="create-errors">{errors.address}</div>}
             <div>
               City
               <input
@@ -88,6 +91,7 @@ function CreateSpot() {
                 onChange={(e) => setCity(e.target.value)}
               />
             </div>
+            {errors.city && <div className="create-errors">{errors.city}</div>}
             <div>
               State
               <input
@@ -97,6 +101,7 @@ function CreateSpot() {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
+            {errors.state && <div className="create-errors">{errors.state}</div>}
             {/* <div>
               Latitude
               <input
@@ -130,6 +135,7 @@ function CreateSpot() {
               />
             </div>
           </div>
+          {errors.description && <div className="create-errors">{errors.description}</div>}
           <div className="title-container">
             <h2>Create a title for your spot</h2>
             <div>
@@ -143,6 +149,7 @@ function CreateSpot() {
               />
             </div>
           </div>
+          {errors.name && <div className="create-errors">{errors.name}</div>}
           <div className="price-container">
             <h2>Set a base price for your spot</h2>
             <div>
@@ -159,6 +166,7 @@ function CreateSpot() {
               </div>
             </div>
           </div>
+          {errors.price && <div className="create-errors">{errors.price}</div>}
           <div className="url-container">
             <h2>Liven up your spot with photos</h2>
             <div>

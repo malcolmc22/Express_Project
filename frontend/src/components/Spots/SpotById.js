@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import * as reviewActions from "../../store/reviews"
 import OpenModalButton from "../OpenModalButton";
 import CreateReview from "../Reviews/CreateReview";
+import { useHistory } from "react-router-dom";
+
 const SpotbyId = () => {
+  const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false)
   const [reviewsLoaded, setReviewsLoaded] = useState(false)
   const dispatch = useDispatch();
@@ -17,7 +20,7 @@ const SpotbyId = () => {
   const currUserId = useSelector((state) => state.session.user)
   // console.log('spots', spots)
   // const hasReview = reviews? reviews.find((review) => review.User.id === currUserId) : []
-  console.log('reviews', reviews)
+  // console.log('reviews', reviews)
 
   useEffect(() => {
     dispatch(spotActions.getSpotByIdThunk(spotId)).then(() => setIsLoaded(true))
@@ -68,6 +71,7 @@ const SpotbyId = () => {
                  <div>{review.User.firstName} </div>
                  <div>{new Date(review.createdAt).toDateString()}</div>
                  <div>{review.review}</div>
+                 {review?.userId === currUserId?.id && <button onClick={() => history.push(`/spots/${spotId}/reviews/${review?.id}/delete`)}>Delete</button>}
                 </div>
               ))}
               {!reviews[0] && spots[0].ownerId !== currUserId?.id && <div>Be the first to post a review!</div>}

@@ -24,6 +24,7 @@ function ManageSpots() {
   // console.log(' component test' , test)
   return (
       <div>
+        <h1> Manage Spots </h1>
         <ul>
             {allSpots[0] && isLoaded &&
             allSpots.map(
@@ -47,6 +48,8 @@ function ManageSpots() {
                 )
             )}
         </ul>
+        {!allSpots[0] && <button onClick={() => history.push('/spots')}> Create a New Spot</button>}
+
     </div>
   );
 }
