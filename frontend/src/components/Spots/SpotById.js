@@ -15,6 +15,10 @@ const SpotbyId = () => {
   const { spotId } = useParams();
   const spots = useSelector((state) => Object.values(state.spots)[0]);
   const reviews = useSelector((state) => Object.values(state.reviews));
+  const sortedReviews = reviews?.sort(function(a,b) {
+    return new Date(b.createdAt) - new Date(a.createdAt)
+  })
+  console.log(sortedReviews, 'test')
   // console.log('spots', spots[0])
   // console.log()
   const currUserId = useSelector((state) => state.session.user)
@@ -73,7 +77,7 @@ const SpotbyId = () => {
                  <div>{review.review}</div>
                  {review?.userId === currUserId?.id && <button onClick={() => history.push(`/spots/${spotId}/reviews/${review?.id}/delete`)}>Delete</button>}
                 </div>
-              ))}
+              )).sort((a,b) => a.createdAt - b.createdAt)}
               {!reviews[0] && spots[0].ownerId !== currUserId?.id && <div>Be the first to post a review!</div>}
           </div>
         </div>
