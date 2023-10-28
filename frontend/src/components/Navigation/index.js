@@ -19,18 +19,18 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <div>
+      <div className="login-container">
         <div onClick={() => history.push('/spots')}>
           Create a New Spot
         </div>
-        <div>
+        <div className="button-container">
           <ProfileButton user={sessionUser} />
         </div>
       </div>
     );
   } else {
     sessionLinks = (
-      <div>
+      <div className="login-container">
 
         <OpenModalButton
           buttonText="Log In"
@@ -46,7 +46,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <div id="header-container">
-      <div>
+      <div className="logo-container">
         <NavLink exact to="/">
         <i className="fa-brands fa-airbnb fa-2xl">Airbnb</i>
         </NavLink>

@@ -1,7 +1,30 @@
 .hidden {
     display: none;
 }
+
 #header-container {
     display: flex;
     justify-content: space-between;
+    height: 60px;
+    border-bottom: solid gray;
+    width: 100%;
+}
+
+.login-container {
+    display: flex;
+    width: 250px;
+    height: 100%;
+    justify-content: space-around;
+    padding-right: 43px;
+    align-items: center;
+}
+
+div > a > i  {
+    padding-top: 20px;
+}
+
+div.profile-dropdown {
+    border: 2px solid black;
+    position: absolute;
+    background-color: white;
 }
