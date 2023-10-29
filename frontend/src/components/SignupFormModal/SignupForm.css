@@ -1,0 +1,52 @@
+.signup-modal-title {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+.signup-error {
+    display: block;
+    margin: auto;
+    width: 50%;
+    color: red;
+}
+.signup-modal-email {
+    display: block;
+    margin: auto;
+    width: 50%;
+    height: 48px;
+}
+.email-input {
+    display: block;
+}
+.signup-modal-username {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+.signup-modal-firstName {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+.signup-modal-lastName {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+.signup-modal-password {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+.signup-modal-confirm-password {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+.signup-modal-submit {
+    display: block;
+    margin: auto;
+    width: 50%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
