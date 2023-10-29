@@ -1,6 +1,11 @@
 .spot-info-container img {
-    max-height: 100px;
-    max-width: 100px;
+    height: 300px;
+    width: 300px;
+    border-radius: 25px;
+    /* border-top-left-radius: 25px;
+    border-top-right-radius: 25px; */
+    border-color: black;
+    padding: 10px;
 }
 
 .yes-button {
@@ -9,4 +14,29 @@
 
 .no-button {
     background-color: darkgrey;
+}
+
+.all-spots-container {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.spot-info-container {
+    margin-top: 20px;
+}
+
+.spot-rating {
+    float: right;
+    padding-right: 20px;
+}
+
+.spot-cty-state {
+    padding-left: 20px;
+}
+
+.spot-price {
+    padding-left: 20px;
+    padding-top: 10px;
 }

@@ -22,7 +22,7 @@ function Spots() {
   // }
   return (
     <div>
-      <ul>
+      <div className="all-spots-container">
         {allSpots && isLoaded &&
           allSpots.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
@@ -31,17 +31,21 @@ function Spots() {
 
                   <div className="spot-info-container" title={name}>
                     <img src={previewImage ? previewImage : 'https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?cs=srgb&dl=pexels-pixabay-356079.jpg&fm=jpg'}/>
-                    <p>
-                      {city}, {state}
-                    </p>
-                    <p><i className="fa-solid fa-star"></i> {avgRating ? avgRating.toFixed(1) : 'New'}</p>
-                    <p>{price} night</p>
+
+                    <div className="spot-text-container">
+                    <div className="spot-rating"><i className="fa-solid fa-star"></i> {avgRating ? avgRating.toFixed(1) : 'New'}</div>
+                      <div className="spot-cty-state">
+                        {city}, {state}
+                      </div>
+
+                      <div className="spot-price">${price} night</div>
+                    </div>
                   </div>
 
               </div>
             )
           )}
-      </ul>
+      </div>
     </div>
   );
 }
