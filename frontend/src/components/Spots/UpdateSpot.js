@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom/";
 import { updateSpotThunk, addSpotImageThunk } from "../../store/spots";
 import { useHistory } from "react-router-dom";
 
+import './NewSpot.css'
+
 function UpdateSpot() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -85,8 +87,8 @@ const spot= useSelector((state) => state.spots.spots[0])
   // }
   return (
     <div>
-      <div>
-        <h1> Update your Spot </h1>
+      <div className="new-spot-container">
+        <h1 className="new-spot-title"> Update your Spot </h1>
         <h2>Where's your place located?</h2>
         <div>
           Guests will only get your exact address once they booked a

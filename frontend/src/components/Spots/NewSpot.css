@@ -1,0 +1,122 @@
+.new-spot-container {
+    width: 25%;
+    margin: auto;
+    height: fit-content;
+}
+.create-errors{
+    color: red;
+}
+.new-spot-header {
+    font-size: large;
+    font-weight: bold;
+}
+.new-spot-desc {
+    margin-bottom: 10px;
+    padding-top: 5px;
+}
+
+.country-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+}
+.address-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+}
+.city-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 80%;
+}
+.state-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 20%
+}
+.city-container{
+    float: left;
+    padding-right: ;
+}
+.desc-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+    height: 100px;
+}
+.name-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+}
+.price-input {
+    background-color: lightblue;
+    border: solid;
+    width: 80%;
+    margin-left: 5px;
+}
+.preview-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+    margin-top: 10px;
+}
+.image-input {
+    display: block;
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+    margin-top: 10px;
+}
+.location-container{
+    border-bottom: solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: fit-content;
+}
+.description-container {
+    border-bottom: solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: fit-content;
+}
+.title-container {
+    border-bottom: solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: fit-content;
+}
+.price-container {
+    border-bottom: solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: fit-content;
+}
+.url-container {
+    border-bottom: solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: fit-content;
+}
+.new-spot-button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.state-container {
+    padding-bottom: 10px;
+}
+
+.new-spot-button {
+    background-color: red;
+    color: white;
+    padding: 10px;
+}
