@@ -106,7 +106,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.errors && <p>{errors.errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button
           type="submit"
           disabled={
