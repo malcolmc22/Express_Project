@@ -24,30 +24,33 @@ function ManageSpots() {
   // console.log(' component test' , test)
   return (
       <div>
-        <h1> Manage Spots </h1>
-        <ul>
+        <h1 className="manage-spot-title"> Manage Spots </h1>
+        <div className="all-spots-container">
             {allSpots[0] && isLoaded &&
             allSpots.map(
                 ({ id, previewImage, city, state, price, avgRating, name }) => (
                 <div key={id} id={id} >
                     {/* {console.log(previewImage, 'this is prevew for', id)} */}
 
-                    <div className="spot-info-container" onClick={ () => history.push(`/spots/${id}`)}>
+                    <div title={name} className="spot-info-container" onClick={ () => history.push(`/spots/${id}`)}>
                     <img src={previewImage ? previewImage : 'https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?cs=srgb&dl=pexels-pixabay-356079.jpg&fm=jpg'}/>
-                    <p>
+                    <div className="spot-text-container">
+                    <div className="spot-rating"><i className="fa-solid fa-star"></i> {avgRating ? avgRating.toFixed(1) : 'New'}</div>
+                      <div className="spot-cty-state">
                         {city}, {state}
-                    </p>
-                    <p>{avgRating}</p>
-                    <p>{price}</p>
+                      </div>
+
+                      <div className="spot-price">${price} night</div>
+                    </div>
                     </div>
                     <div className="update-and-delete-container">
-                        <button onClick={() => history.push(`/spots/${id}/update`)}>Update</button>
-                        <button onClick={() => history.push(`/spots/${id}/delete`)}>Delete</button>
+                        <button className='update-button' onClick={() => history.push(`/spots/${id}/update`)}>Update</button>
+                        <button className='delete-button' onClick={() => history.push(`/spots/${id}/delete`)}>Delete</button>
                     </div>
                 </div>
                 )
             )}
-        </ul>
+        </div>
         {!allSpots[0] && <button onClick={() => history.push('/spots')}> Create a New Spot</button>}
 
     </div>

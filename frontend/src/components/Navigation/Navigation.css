@@ -53,3 +53,10 @@ div.profile-dropdown {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+.profile-button {
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white;
+    padding-top: 5px;
+}
