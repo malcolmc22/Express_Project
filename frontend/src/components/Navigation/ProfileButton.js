@@ -42,11 +42,11 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-ninja" />
       </button>
       <div className={ulClassName} ref={ulRef}>
-        <div>Hello, {user.firstName}</div>
-        <div>{user.email}</div>
-        <div onClick={() => history.push('/spots/current')}>Manage Spots</div>
-        <div>
-          <button onClick={logout}>Log Out</button>
+        <div className="profile-greeting">Hello, {user.firstName}</div>
+        <div className="profile-email">{user.email}</div>
+        <div className='profile-manage-spots' onClick={() => history.push('/spots/current')}>Manage Spots</div>
+        <div className="profile-logout-container">
+          <button className='profile-logout' onClick={logout}>Log Out</button>
         </div>
       </div>
     </>

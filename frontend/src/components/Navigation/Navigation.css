@@ -27,4 +27,29 @@ div.profile-dropdown {
     border: 2px solid black;
     position: absolute;
     background-color: white;
+    right: 20px;
+    width: 125px;
+    height: fit-content;
+}
+
+.profile-greeting {
+    display: block;
+    margin-left: 10px;
+}
+.profile-email,
+.profile-manage-spots
+ {
+    display: block;
+    margin: auto;
+    border-top: solid black;
+}
+.profile-logout {
+    display: block;
+    margin: auto;
+    background-color: grey;
+    color: white;
+}
+.profile-logout-container {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
