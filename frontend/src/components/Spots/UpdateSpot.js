@@ -28,6 +28,7 @@ function UpdateSpot() {
   const [description, setDescription] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState();
+  const [errors, setErrors] = useState({})
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId)).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -61,7 +62,7 @@ const spot= useSelector((state) => state.spots.spots[0])
     };
     const updatedSpot = await dispatch(updateSpotThunk(spotData, spotId));
 
-    if (updatedSpot) {
+    if (updatedSpot.id) {
       // const spotImageData = {
       //   id: updatedSpot.id,
       //   url: previewImg,
@@ -80,6 +81,7 @@ const spot= useSelector((state) => state.spots.spots[0])
       history.push(`/spots/${updatedSpot.id}`);
     } else {
       console.log("spot was not created");
+      setErrors(updatedSpot.errors)
     }
   };
   // if (oldCountry === undefined) {
@@ -89,7 +91,7 @@ const spot= useSelector((state) => state.spots.spots[0])
     <div>
       <div className="new-spot-container">
         <h1 className="new-spot-title"> Update your Spot </h1>
-        <h2>Where's your place located?</h2>
+        <div className="new-spot-header">Where's your place located?</div>
         <div>
           Guests will only get your exact address once they booked a
           reservation.
@@ -97,8 +99,11 @@ const spot= useSelector((state) => state.spots.spots[0])
         <form onSubmit={handleSubmit}>
           <div className="location-container">
             <div>
-              Country
+              Country {errors.country && (
+              <div className="create-errors">{errors.country}</div>
+            )}
               <input
+              className="country-input"
                 type="text"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
@@ -106,26 +111,33 @@ const spot= useSelector((state) => state.spots.spots[0])
               />
             </div>
             <div>
-              Street Address
+              Street Address {errors.address && (
+              <div className="create-errors">{errors.address}</div>
+            )}
               <input
+              className="address-input"
                 placeholder="Address"
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <div>
-              City
+            <div className="city-container">
+              City {errors.city && <div className="create-errors">{errors.city}</div>}
               <input
+              className="city-input"
                 placeholder="City"
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
             </div>
-            <div>
-              State
+            <div className="state-container">
+              State {errors.state && (
+              <div className="create-errors">{errors.state}</div>
+            )}
               <input
+              className="state-input"
                 placeholder="STATE"
                 type="text"
                 value={state}
@@ -134,12 +146,15 @@ const spot= useSelector((state) => state.spots.spots[0])
             </div>
           </div>
           <div className="description-container">
-            <h2>Describe your place to guests</h2>
-            <div>
+            <h2 className="new-spot-header">Describe your place to guests</h2>
+            <div className="new-spot-desc">
               Mention the best features of your space, any special amenities
               like fast wifi or parking, and what you love about the
-              neighborhood.
-              <input
+              neighborhood.   {errors.description && (
+            <div className="create-errors">{errors.description}</div>
+          )}
+              <textarea
+              className="desc-input"
                 placeholder="Please write at least 30 characters"
                 type="text"
                 value={description}
@@ -148,11 +163,13 @@ const spot= useSelector((state) => state.spots.spots[0])
             </div>
           </div>
           <div className="title-container">
-            <h2>Create a title for your spot</h2>
-            <div>
+            <div className="new-spot-header">Create a title for your spot</div>
+            <div className="new-spot-desc">
               Catch guests' attention with a spot title that highlights what
               makes your place special
+              {errors.name && <div className="create-errors">{errors.name}</div>}
               <input
+              className="name-input"
                 placeholder="Name of your spot"
                 type="text"
                 value={name}
@@ -161,13 +178,15 @@ const spot= useSelector((state) => state.spots.spots[0])
             </div>
           </div>
           <div className="price-container">
-            <h2>Set a base price for your spot</h2>
-            <div>
+            <div className="new-spot-header">Set a base price for your spot</div>
+            <div className="new-spot-desc">
               Competitive pricing can help your listing stand out and rank
               higher in search results.
+              {errors.price && <div className="create-errors">{errors.price}</div>}
               <div>
                 ${" "}
                 <input
+                className="price-input"
                   placeholder="Price per night (USD)"
                   type="number"
                   value={price}
@@ -176,9 +195,8 @@ const spot= useSelector((state) => state.spots.spots[0])
               </div>
             </div>
           </div>
-
-          <div className="button-container">
-            <button type="submit">Update Spot</button>
+          <div className="new-spot-button-container">
+            <button className="new-spot-button" type="submit">Update Spot</button>
           </div>
         </form>
       </div>
