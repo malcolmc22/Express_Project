@@ -43,6 +43,7 @@
     font-weight: bold;
     margin: auto;
     width: 60%;
+    margin-bottom: 10px;
 }
 .review-input {
     background-color: lightblue;
@@ -60,7 +61,7 @@
     display: flex;
     justify-content: center;
 }
-.star-icon-contianer {
+.star-icon-container {
     padding-left: 19px;
 }
 .up-down-container {
@@ -81,5 +82,17 @@
     margin-top: 10px;
 }
 .up-arrow-container > i {
-
+    margin-left: 9px;
+}
+.down-arrow-container > i {
+    margin-left: 9px;
+}
+.submit-review-button {
+    background-color: rgb(255, 253, 253);
+    color: gray;
+    border: 3px solid gray;
+    display: flex;
+    margin: auto;
+    padding: 16px;
+    margin-top: 15px;
 }

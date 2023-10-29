@@ -62,23 +62,23 @@ function CreateReview() {
           {<div className="star-count-container"> Stars: {stars} </div>}
         </div>
         <div className="up-down-container">
-          <div className="up-arrow-container">
+          <div className="up-arrow-container" onClick={(e) => setStars(stars === 5 ? 5 : stars + 1)}>
             {" "}
             <i
-              onClick={(e) => setStars(stars === 5 ? 5 : stars + 1)}
+              // onClick={(e) => setStars(stars === 5 ? 5 : stars + 1)}
               className="fa-solid fa-arrow-up"
             />
           </div>
-          <div className="down-arrow-container">
+          <div className="down-arrow-container" onClick={(e) => setStars(stars === 1 ? 1 : stars - 1)}>
             <i
-              onClick={(e) => setStars(stars === 1 ? 1 : stars - 1)}
+              // onClick={(e) => setStars(stars === 1 ? 1 : stars - 1)}
               className="fa-solid fa-arrow-down"
             />
           </div>
           {/* {<div className="star-count-container"> Stars: {stars} </div>} */}
         </div>
       </div>
-      <button type="submit" disabled={review.length < 10 || stars < 1}>
+      <button  className='submit-review-button' type="submit" disabled={review.length < 10 || stars < 1}>
         Submit Your Review
       </button>
     </form>
