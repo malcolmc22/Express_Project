@@ -19,13 +19,13 @@
     height: 40px;
     color: white;
 }
-.delete-review-title{
+.delete-spot-title{
     font-size: xx-large;
     font-weight: bold;
     display: flex;
     justify-content: center;
 }
-.delete-review-desc {
+.delete-spot-desc {
     font-size: large;
     font-weight: bold;
     padding-top: 10px;

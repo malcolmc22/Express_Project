@@ -16,8 +16,8 @@ function DeleteReview () {
     return (
         <>
         <div className="delete-container">
-            <h1> Confirm Delete </h1>
-            <div>Are you sure you want to delete this review?</div>
+            <div className="delete-review-title"> Confirm Delete </div>
+            <div className="delete-review-desc">Are you sure you want to delete this review?</div>
             <button  className='yes-button' onClick={() => onDelete()}> Yes (Delete Review)</button>
             <button className='no-button' onClick={() => history.push(`/spots/${spotId}`)}> No (Keep Review)</button>
         </div>
