@@ -31,3 +31,55 @@
     padding-top: 10px;
     padding-bottom: 15px;
 }
+#modal-content {
+    display: block;
+    width: 500px;
+    height: fit-content;
+    border-radius: 25px;
+    border: 8px solid black;
+}
+.create-review-title {
+    font-size: x-large;
+    font-weight: bold;
+    margin: auto;
+    width: 60%;
+}
+.review-input {
+    background-color: lightblue;
+    border: solid;
+    width: 100%;
+    margin: auto;
+    height: 100px;
+
+}
+.review-modal {
+    margin: auto;
+    width: 80%;
+}
+.stars-container{
+    display: flex;
+    justify-content: center;
+}
+.star-icon-contianer {
+    padding-left: 19px;
+}
+.up-down-container {
+    padding-left: 15px;
+}
+.up-arrow-container {
+    background: green;
+    width: 30px;
+    border: 3px solid black;
+}
+.down-arrow-container {
+    background: red;
+    border: 3px solid black;
+    /* padding-top: 5px; */
+    margin-top: 5px;
+}
+.star-count-icon-container {
+    margin-top: 10px;
+}
+.up-arrow-container > i {
+
+}
