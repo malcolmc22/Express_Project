@@ -173,6 +173,8 @@ function CreateSpot() {
             <div className="create-errors">{errors.description}</div>
           )}
               <textarea
+              id="create-spot"
+              name="create-spot"
                 className="desc-input"
                 placeholder="Please write at least 30 characters"
                 type="field"
