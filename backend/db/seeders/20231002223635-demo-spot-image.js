@@ -35,7 +35,7 @@ module.exports = {
     {
       spotId: 3,
       url: 'https://cdn.pixabay.com/photo/2017/01/30/15/35/autumn-2021154_640.jpg',
-      preview: false
+      preview: true
     }
    ], {validate: true })
   },
