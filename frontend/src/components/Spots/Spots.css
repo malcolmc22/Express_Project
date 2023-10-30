@@ -64,3 +64,12 @@
     display: flex;
     justify-content: center;
 }
+
+.manage-spot-button {
+    margin: auto;
+    display: flex;
+    padding: 20px;
+    background-color: gray;
+    color: white;
+    margin-top: 15px;
+}

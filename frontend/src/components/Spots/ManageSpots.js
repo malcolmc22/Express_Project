@@ -51,7 +51,7 @@ function ManageSpots() {
                 )
             )}
         </div>
-        {!allSpots[0] && <button onClick={() => history.push('/spots')}> Create a New Spot</button>}
+        {!allSpots[0] && <button className='manage-spot-button' onClick={() => history.push('/spots')}> Create a New Spot</button>}
 
     </div>
   );
