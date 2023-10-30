@@ -44,12 +44,14 @@ function CreateReview() {
     // }
   };
   return (
-    <form className="review-modal" onSubmit={onSubmit}>
+    <form id='create-review-form' className="review-modal" onSubmit={onSubmit}>
       <div className="create-review-title">How was your stay?</div>
       {errors.errors && <div>{errors.errors.review}</div>}
       <textarea
         type="text"
-        name="create-spot"
+        id="create-review"
+        name="create-review"
+        form='create-review-form'
         className="review-input"
         placeholder="Leave your review here..."
         value={review}

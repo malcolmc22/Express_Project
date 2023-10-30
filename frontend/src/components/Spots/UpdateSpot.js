@@ -96,7 +96,7 @@ const spot= useSelector((state) => state.spots.spots[0])
           Guests will only get your exact address once they booked a
           reservation.
         </div>
-        <form onSubmit={handleSubmit}>
+        <form  id='update-spot-form' onSubmit={handleSubmit}>
           <div className="location-container">
             <div>
               Country {errors.country && (
@@ -157,6 +157,7 @@ const spot= useSelector((state) => state.spots.spots[0])
               id="update-spot"
               name="update-spot"
               className="desc-input"
+              form='update-spot-form'
                 placeholder="Please write at least 30 characters"
                 type="text"
                 value={description}

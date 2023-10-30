@@ -73,7 +73,7 @@ function CreateSpot() {
           Guests will only get your exact address once they booked a
           reservation.
         </div>
-        <form onSubmit={handleSubmit}>
+        <form id='create-spot-form' onSubmit={handleSubmit}>
           <div className="location-container">
             <div>
               Country  {errors.country && (
@@ -175,6 +175,7 @@ function CreateSpot() {
               <textarea
               id="create-spot"
               name="create-spot"
+              form='create-spot-form'
                 className="desc-input"
                 placeholder="Please write at least 30 characters"
                 type="field"
