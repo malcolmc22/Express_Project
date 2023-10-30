@@ -78,7 +78,8 @@ const reviewsReducer = (state = initalState, action) => {
       return reviewsState;
     }
     case MAKE_REVIEW: {
-      return  {...state, reviews:{...state.reviews, ...action.review}}
+      const newState = {...state, reviews:{...state.reviews, ...action.review}}
+      return  newState
     }
     case DELETE_REVIEW: {
       const newState = {...state, reviews: {...state.reviews}}
