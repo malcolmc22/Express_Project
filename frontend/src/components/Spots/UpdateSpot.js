@@ -153,13 +153,13 @@ const spot= useSelector((state) => state.spots.spots[0])
               neighborhood.   {errors.description && (
             <div className="create-errors">{errors.description}</div>
           )}
-              <textarea
+              <input
+              type="text-area"
               id="update-spot"
               name="update-spot"
               className="desc-input"
               form='update-spot-form'
                 placeholder="Please write at least 30 characters"
-
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
