@@ -178,7 +178,7 @@ function CreateSpot() {
               form='create-spot-form'
                 className="desc-input"
                 placeholder="Please write at least 30 characters"
-                type="field"
+
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />

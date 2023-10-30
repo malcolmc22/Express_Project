@@ -159,7 +159,7 @@ const spot= useSelector((state) => state.spots.spots[0])
               className="desc-input"
               form='update-spot-form'
                 placeholder="Please write at least 30 characters"
-                type="text"
+
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />

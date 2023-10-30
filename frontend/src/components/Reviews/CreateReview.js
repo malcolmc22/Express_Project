@@ -48,7 +48,6 @@ function CreateReview() {
       <div className="create-review-title">How was your stay?</div>
       {errors.errors && <div>{errors.errors.review}</div>}
       <textarea
-        type="text"
         id="create-review"
         name="create-review"
         form='create-review-form'
