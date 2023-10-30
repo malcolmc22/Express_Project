@@ -90,3 +90,10 @@
     color: white;
     padding: 10px;
 }
+
+.spot-by-id-post-review-container > button {
+    background: gray;
+    color: white;
+    margin-top: 8px;
+    padding: 10px;
+}

@@ -73,8 +73,9 @@ const SpotbyId = () => {
               </div>
               {/* <div className="divider"> </div> */}
           <div className="reviews-container">
-            {currUserId && !(reviews.find((review) => review.User.id === currUserId.id)) && spots[0].ownerId !== currUserId.id && <OpenModalButton spotId={spotId} buttonText='Post Your Review' modalComponent={<CreateReview />}/>}
+            {/* {currUserId && !(reviews.find((review) => review.User.id === currUserId.id)) && spots[0].ownerId !== currUserId.id && <OpenModalButton spotId={spotId} buttonText='Post Your Review' modalComponent={<CreateReview />}/>} */}
             <div className="spot-by-id-reviews-count"> <div className="star-and-reviews"><i className="fa-solid fa-star"></i>{spots[0].avgRating?.toFixed(1)} { spots[0].numReviews > 1 ? `· ${spots[0].numReviews} Reviews` : spots[0].numReviews === 1 ? `· ${spots[0].numReviews} Review` : 'New'}</div></div>
+            {currUserId && !(reviews.find((review) => review.User.id === currUserId.id)) && spots[0].ownerId !== currUserId.id && <div className="spot-by-id-post-review-container"><OpenModalButton spotId={spotId} buttonText='Post Your Review' modalComponent={<CreateReview />}/> </div>}
               {reviewsLoaded && reviews[0] && reviews?.map((review) => (
                 <div key={review?.id} className="review-container">
                  <div className="reviewers-firstname-container">{review.User.firstName} </div>
