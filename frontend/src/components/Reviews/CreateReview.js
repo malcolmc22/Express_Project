@@ -49,6 +49,7 @@ function CreateReview() {
       {errors.errors && <div>{errors.errors.review}</div>}
       <textarea
         type="text"
+        name="create-spot"
         className="review-input"
         placeholder="Leave your review here..."
         value={review}

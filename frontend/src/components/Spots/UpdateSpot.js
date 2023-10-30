@@ -154,6 +154,7 @@ const spot= useSelector((state) => state.spots.spots[0])
             <div className="create-errors">{errors.description}</div>
           )}
               <textarea
+              name="update-spot"
               className="desc-input"
                 placeholder="Please write at least 30 characters"
                 type="text"
