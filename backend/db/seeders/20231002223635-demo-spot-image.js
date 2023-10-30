@@ -24,17 +24,17 @@ module.exports = {
    await SpotImage.bulkCreate([
     {
       spotId: 1,
-      url: 'https://github.com/malcolmc22/Express_Project/blob/main/images/airbnb_dbdiagram.png' ,
+      url: 'https://cdn.pixabay.com/photo/2016/12/06/14/33/log-cabin-1886620_640.jpg' ,
       preview: true
     },
     {
       spotId: 2,
-      url: 'https://github.com/malcolmc22/Express_Project/blob/main/images/airbnb_dbdiagram.png',
+      url: 'https://cdn.pixabay.com/photo/2017/11/16/19/29/cottage-2955582_640.jpg',
       preview: true
     },
     {
       spotId: 3,
-      url: 'https://github.com/malcolmc22/Express_Project/blob/main/images/airbnb_dbdiagram.png',
+      url: 'https://cdn.pixabay.com/photo/2017/01/30/15/35/autumn-2021154_640.jpg',
       preview: false
     }
    ], {validate: true })
