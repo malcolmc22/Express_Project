@@ -1,0 +1,92 @@
+.spot-by-id-container {
+    margin: auto;
+    /* width: 90%; */
+    max-width: 1000px;
+}
+.spot-by-id-title {
+    margin-top: 20px;
+    font-size: xxx-large;
+}
+.spot-by-id-header {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: x-large;
+}
+.image-container {
+    height: 374px;
+}
+.spot-by-id-image-true > img {
+    width: 490px;
+    height: 363px;
+    float: left;
+    padding-top: 3px;
+}
+.spot-by-id-image-false > img {
+    width: 250px;
+    height: 180px;
+    float: right;
+    padding-top: 3px;
+    padding-right: 3px;
+}
+.info-container {
+    width: 1000px;
+}
+.reserve-container {
+    /* float: left; */
+    border: 3px solid black;
+    border-radius: 15px;
+    padding: 15px;
+    width: 35%;
+    height: 69px;
+    float: right;
+    margin-bottom: 79px;
+}
+.spot-by-id-price {
+    font-size: large;
+}
+.spot-by-id-star-container {
+    margin-left: 110px;
+}
+.stars-reviews-containers {
+    font-size: large;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+}
+.reserve-button {
+    background: red;
+    color: white;
+    width: 100%;
+    margin-top: 16px;
+}
+.spot-by-id-description-container {
+    width: 600px;
+    float: left;
+    min-height: 105px;
+    height: fit-content;
+}
+.reserve-button-container {
+    float: right;
+}
+.star-and-reviews {
+    margin-top: 202px;
+}
+.spot-by-id-reviews-count {
+    border-bottom: 2px solid black;
+    /* height: 238px; */
+    height: 25px;
+}
+.reviewers-firstname-container {
+    margin-top: 15px;
+}
+.reviewers-created-container {
+    color: gray;
+}
+.spot-by-id-delete-review-button {
+    margin-top: 10px;
+    background: gray;
+    color: white;
+    padding: 10px;
+}
