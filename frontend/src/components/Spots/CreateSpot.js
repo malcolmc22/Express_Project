@@ -172,7 +172,7 @@ function CreateSpot() {
               {errors.description && (
             <div className="create-errors">{errors.description}</div>
           )}
-              <input
+              <textarea
               id="create-spot"
               name="create-spot"
               form='create-spot-form'

@@ -47,7 +47,7 @@ function CreateReview() {
     <form id='create-review-form' className="review-modal" onSubmit={onSubmit}>
       <div className="create-review-title">How was your stay?</div>
       {errors.errors && <div>{errors.errors.review}</div>}
-      <input
+      <textarea
         id="create-review"
         name="create-review"
         form='create-review-form'
